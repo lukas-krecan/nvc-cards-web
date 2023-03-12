@@ -1,3 +1,15 @@
 .card {
     min-height: 100px;
 }
+
+.text1 {
+    font-size: 120%;
+}
+
+.text2 {
+    font-size: 100%;
+}
+
+.text3 {
+    font-size: 90%;
+}

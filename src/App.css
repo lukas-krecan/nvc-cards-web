@@ -13,3 +13,9 @@
 .text3 {
     font-size: 90%;
 }
+.selectedNeed {
+    background-color: #d4ebf2
+}
+.selectedFeeling {
+    background-color: #f2dbd4
+}

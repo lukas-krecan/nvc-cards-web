@@ -14,8 +14,8 @@
     font-size: 90%;
 }
 .selectedNeed {
-    background-color: #d4ebf2
+    background-color: #d4ebf2 !important;
 }
 .selectedFeeling {
-    background-color: #f2dbd4
+    background-color: #f2dbd4 !important;
 }

@@ -1,6 +1,6 @@
 import React, {memo} from 'react';
 import './App.css';
-import {CardData, CardInfo, feelings, needs} from './Data';
+import {CardData, CardInfo, feelings, findCard, needs} from './Data';
 import {Tab, Tabs} from "react-bootstrap";
 
 type NvcCardsAppProps = {};
@@ -18,6 +18,10 @@ class App extends React.Component<
         this.state = {
             selectedCards: [],
         };
+    }
+
+    private getSelectedCardsList() {
+        return this.state.selectedCards.map((id) => findCard(id));
     }
 
     private selectCard(item: CardInfo) {
@@ -38,6 +42,9 @@ class App extends React.Component<
                     </Tab>
                     <Tab eventKey="feelings" title="Pocity" key="feelings">
                         <CardList cards={feelings} selectedCards={this.state.selectedCards} onCardClick={this.selectCard.bind(this)}/>
+                    </Tab>
+                    <Tab eventKey="selection" title="Výběr" key="selection">
+                        <CardList cards={this.getSelectedCardsList()} selectedCards={this.state.selectedCards} onCardClick={this.selectCard.bind(this)}/>
                     </Tab>
                 </Tabs>
             </div>

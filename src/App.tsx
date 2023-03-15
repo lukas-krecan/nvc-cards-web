@@ -1,7 +1,8 @@
-import React, {memo} from 'react';
+import React from 'react';
 import './App.css';
 import {CardData, CardInfo, feelings, findCard, needs} from './Data';
-import {Card, Container, Nav, Navbar, Row, Tab, Tabs} from "react-bootstrap";
+import {Container, Row, Tab, Tabs} from "react-bootstrap";
+import Dragula from "react-dragula";
 
 type NvcCardsAppProps = {};
 
@@ -47,7 +48,7 @@ class App extends React.Component<
                                       onCardClick={this.selectCard.bind(this)}/>
                         </Tab>
                         <Tab eventKey="selection" title="Výběr" key="selection">
-                            <CardList cards={this.getSelectedCardsList()} selectedCards={this.state.selectedCards}
+                            <SelectedCardList cards={this.getSelectedCardsList()} selectedCards={this.state.selectedCards}
                                       onCardClick={this.selectCard.bind(this)}/>
                         </Tab>
                     </Tabs>
@@ -81,6 +82,35 @@ const CardList = (props: CardListProps) => {
         </Container>
     );
 };
+
+class SelectedCardList extends React.Component<CardListProps> {
+
+    render() {
+        const {cards} = this.props;
+
+        const isSelected = (card: CardInfo): boolean => {
+            return this.props.selectedCards.indexOf(card.id) !== -1;
+        };
+
+        return (
+            <Container>
+                <Row className="text-center text-lg-start" ref={this.dragulaDecorator}>
+                    {cards.map(card => {
+                        return <CardView onCardClick={this.props.onCardClick} card={card} isSelected={isSelected(card)}
+                                         key={card.id}/>
+                    })}
+                </Row>
+            </Container>
+        );
+    }
+
+    dragulaDecorator = (componentBackingInstance: any) => {
+        if (componentBackingInstance) {
+            let options = { };
+            Dragula([componentBackingInstance], options);
+        }
+    };
+}
 
 type CardProps = {
     card: CardInfo;

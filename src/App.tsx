@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import {CardData, CardInfo, feelings, findCard, needs} from './Data';
-import {Card, Container, Row, Tab, Tabs} from "react-bootstrap";
+import {Card, Container, Navbar, Row, Tab, Tabs} from "react-bootstrap";
 import Dragula from "react-dragula";
 
 type NvcCardsAppProps = {};
@@ -40,24 +40,56 @@ class App extends React.Component<
 
     render() {
         return (
-            <div className="App">
-                <Container>
-                    <Tabs>
-                        <Tab eventKey="needs" title="Potřeby" key="needs">
-                            <CardList cards={needs} selectedCards={this.state.selectedCards}
-                                      onCardClick={this.selectCard.bind(this)}/>
-                        </Tab>
-                        <Tab eventKey="feelings" title="Pocity" key="feelings">
-                            <CardList cards={feelings} selectedCards={this.state.selectedCards}
-                                      onCardClick={this.selectCard.bind(this)}/>
-                        </Tab>
-                        <Tab eventKey="selection" title="Výběr" key="selection">
-                            <SelectedCardList cards={this.getSelectedCardsList()} selectedCards={this.state.selectedCards}
-                                      onCardClick={this.selectCard.bind(this)} onSelectionChange={this.setNewSelection.bind(this)}/>
-                        </Tab>
-                    </Tabs>
-                </Container>
-            </div>
+            <Container>
+                <Navbar bg="light" expand="lg" sticky="top">
+                    <a className="navbar-brand" href="#">NvcCards</a>
+                    <button className="navbar-toggler" type="button" data-toggle="collapse"
+                            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span className="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul className="navbar-nav mr-auto">
+                            <li className="nav-item active">
+                                <a className="nav-link" href="#">Home <span className="sr-only">(current)</span></a>
+                            </li>
+                            <li className="nav-item">
+                                <a className="nav-link" href="#">Link</a>
+                            </li>
+                            <li className="nav-item dropdown">
+                                <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Dropdown
+                                </a>
+                                <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a className="dropdown-item" href="#">Action</a>
+                                    <a className="dropdown-item" href="#">Another action</a>
+                                    <div className="dropdown-divider"></div>
+                                    <a className="dropdown-item" href="#">Something else here</a>
+                                </div>
+                            </li>
+                            <li className="nav-item">
+                                <a className="nav-link disabled" href="#">Disabled</a>
+                            </li>
+                        </ul>
+                    </div>
+                </Navbar>
+                <Tabs>
+                    <Tab eventKey="needs" title="Potřeby" key="needs">
+                        <CardList cards={needs} selectedCards={this.state.selectedCards}
+                                  onCardClick={this.selectCard.bind(this)}/>
+                    </Tab>
+                    <Tab eventKey="feelings" title="Pocity" key="feelings">
+                        <CardList cards={feelings} selectedCards={this.state.selectedCards}
+                                  onCardClick={this.selectCard.bind(this)}/>
+                    </Tab>
+                    <Tab eventKey="selection" title="Výběr" key="selection">
+                        <SelectedCardList cards={this.getSelectedCardsList()} selectedCards={this.state.selectedCards}
+                                  onCardClick={this.selectCard.bind(this)} onSelectionChange={this.setNewSelection.bind(this)}/>
+                    </Tab>
+                </Tabs>
+            </Container>
         );
     }
 }

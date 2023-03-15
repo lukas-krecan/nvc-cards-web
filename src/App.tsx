@@ -34,6 +34,10 @@ class App extends React.Component<
         }
     }
 
+    private setNewSelection(ids: string[]) {
+        this.setState({selectedCards: ids});
+    }
+
     render() {
         return (
             <div className="App">
@@ -49,7 +53,7 @@ class App extends React.Component<
                         </Tab>
                         <Tab eventKey="selection" title="Výběr" key="selection">
                             <SelectedCardList cards={this.getSelectedCardsList()} selectedCards={this.state.selectedCards}
-                                      onCardClick={this.selectCard.bind(this)}/>
+                                      onCardClick={this.selectCard.bind(this)} onSelectionChange={this.setNewSelection.bind(this)}/>
                         </Tab>
                     </Tabs>
                 </Container>
@@ -83,7 +87,11 @@ const CardList = (props: CardListProps) => {
     );
 };
 
-class SelectedCardList extends React.Component<CardListProps> {
+type SelectedCardListProps = CardListProps & {
+    onSelectionChange: (ids: string[]) => void
+};
+
+class SelectedCardList extends React.Component<SelectedCardListProps> {
 
     render() {
         const {cards} = this.props;
@@ -104,12 +112,24 @@ class SelectedCardList extends React.Component<CardListProps> {
         );
     }
 
-    dragulaDecorator = (componentBackingInstance: any) => {
+    dragulaDecorator = (componentBackingInstance: HTMLElement) => {
         if (componentBackingInstance) {
             let options = { };
-            Dragula([componentBackingInstance], options);
+            Dragula([componentBackingInstance], options).on('drop',  el => {
+                const ids = this.getChildrenIds(componentBackingInstance);
+                this.props.onSelectionChange(ids)
+            })
         }
     };
+
+    private getChildrenIds(componentBackingInstance: HTMLElement) {
+        const ids = []
+        const children = componentBackingInstance.children;
+        for (let i = 0; i < children.length; i++) {
+            ids.push(children[i].id)
+        }
+        return ids;
+    }
 }
 
 type CardProps = {
@@ -136,6 +156,7 @@ const CardView = (props: CardProps) => {
     return <div
         className={"card col-lg-3 col-md-4 col-sm-12 " + selectedClass(card)}
         onClick={_ => props.onCardClick(card)}
+        id={card.id}
     >
         <div className="card-body">
             {card.data.map((t, i) => <p className={fontClass(t)} key={i}>{t.text}</p>)}

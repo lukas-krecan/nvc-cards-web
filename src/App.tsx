@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import {CardData, CardInfo, feelings, findCard, needs} from './Data';
-import {Container, Row, Tab, Tabs} from "react-bootstrap";
+import {Card, Container, Row, Tab, Tabs} from "react-bootstrap";
 import Dragula from "react-dragula";
 
 type NvcCardsAppProps = {};
@@ -141,7 +141,17 @@ type CardProps = {
 const CardView = (props: CardProps) => {
     const {card, isSelected} = props;
 
-    const fontClass = (t: CardData) => "text" + (t.size || 1);
+    const guessFontSize = (text: string): number => {
+        if (text.length < 20) {
+            return 1;
+        } else if (text.length < 25) {
+            return 2;
+        } else {
+            return 3;
+        }
+    };
+
+    const fontClass = (c: CardData) => "text" + (c.size ? c.size : guessFontSize(c.text));
 
     function selectedClass(card: CardInfo) {
         if (!isSelected) {
@@ -153,15 +163,15 @@ const CardView = (props: CardProps) => {
         }
     }
 
-    return <div
-        className={"card col-lg-3 col-md-4 col-sm-12 " + selectedClass(card)}
+    return <Card
+        className={"col-lg-3 col-md-4 col-sm-12 text-center " + selectedClass(card)}
         onClick={_ => props.onCardClick(card)}
         id={card.id}
     >
         <div className="card-body">
             {card.data.map((t, i) => <p className={fontClass(t)} key={i}>{t.text}</p>)}
         </div>
-    </div>
+    </Card>
 }
 
 export default App;

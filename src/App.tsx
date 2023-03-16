@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import {CardData, CardInfo, feelings, findCard, needs} from './Data';
-import {Card, Container, Nav, Navbar, NavbarBrand, Row, Tab, Tabs} from "react-bootstrap";
+import {Card, Container, Nav, Navbar, NavbarBrand, Row, Offcanvas} from "react-bootstrap";
 import Dragula from "react-dragula";
 
 type NvcCardsAppProps = {};
@@ -11,6 +11,8 @@ type Screens = 'feelings' | 'needs' | 'selection';
 type NvcCardsAppState = {
     activeScreen: Screens;
     selectedCards: string[];
+
+    navBarExpanded: boolean;
 };
 
 class App extends React.Component<
@@ -22,6 +24,7 @@ class App extends React.Component<
         this.state = {
             activeScreen: 'feelings',
             selectedCards: [],
+            navBarExpanded: false
         };
     }
 
@@ -59,7 +62,7 @@ class App extends React.Component<
     }
 
     private setNewSelection(ids: string[]) {
-        this.setState({selectedCards: ids});
+        this.setState({selectedCards: ids, navBarExpanded: false});
     }
 
     private clean() {
@@ -70,7 +73,7 @@ class App extends React.Component<
     private screenSelection(screenId: Screens, label: string) {
         const activeScreen = this.state.activeScreen;
 
-        return <Nav.Link active={activeScreen == screenId}
+        return <Nav.Link active={activeScreen === screenId}
                          onClick={() => this.setState({activeScreen: screenId})}>{label}</Nav.Link>;
     }
 
@@ -78,19 +81,40 @@ class App extends React.Component<
     render() {
         return (
             <Container>
-                <Navbar bg="light" expand="sm" sticky="top">
+                <Navbar collapseOnSelect
+                        bg="light"
+                        expand="sm"
+                        sticky="top"
+                        expanded={this.state.navBarExpanded}
+                        onToggle={expanded => this.setState({navBarExpanded: expanded})}>
                     <NavbarBrand>NvcCards</NavbarBrand>
                     <Nav>
                         {this.screenSelection('feelings', 'Pocity')}
                         {this.screenSelection('needs', 'Potřeby')}
                         {this.screenSelection('selection', 'Výběr')}
                     </Nav>
-                    <Navbar.Toggle aria-controls="navbarSupportedContent"/>
-                    <Navbar.Collapse id="navbarSupportedContent">
-                        <Nav>
-                            <Nav.Link onClick={this.clean.bind(this)}>Vymazat</Nav.Link>
-                        </Nav>
-                    </Navbar.Collapse>
+                    <Navbar.Toggle aria-controls={`offcanvasNavbar-expand`}/>
+                    <Navbar.Offcanvas
+                        id={`offcanvasNavbar-expand`}
+                        aria-labelledby={`offcanvasNavbarLabel-expand`}
+                        placement="end"
+                    >
+                        <Offcanvas.Header closeButton>
+                            <Offcanvas.Title id={`offcanvasNavbarLabel-expand`}>
+                                NVC Kartičky
+                            </Offcanvas.Title>
+                        </Offcanvas.Header>
+                        <Offcanvas.Body>
+                            <Nav className="justify-content-end flex-grow-1 pe-3">
+                                <Navbar.Toggle aria-controls="navbarSupportedContent"/>
+                                <Navbar.Collapse id="navbarSupportedContent">
+                                    <Nav>
+                                        <Nav.Link onClick={this.clean.bind(this)}>Vymazat</Nav.Link>
+                                    </Nav>
+                                </Navbar.Collapse>
+                            </Nav>
+                        </Offcanvas.Body>
+                    </Navbar.Offcanvas>
                 </Navbar>
 
                 <CardList cards={feelings} selectedCards={this.state.selectedCards}

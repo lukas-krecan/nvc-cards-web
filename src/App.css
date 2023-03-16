@@ -20,6 +20,20 @@
     background-color: #f2dbd4 !important;
 }
 
+/* Navbar */
+@media (min-width: 400px) {
+    .navbar-expand-sm .navbar-nav {
+        flex-direction: row;
+    }
+}
+
+@media (min-width: 400px) {
+    .navbar-expand-sm .navbar-nav .nav-link {
+        padding-right: var(--bs-navbar-nav-link-padding-x);
+        padding-left: var(--bs-navbar-nav-link-padding-x);
+    }
+}
+
 /* Dragula */
 .gu-mirror {
     position: fixed !important;

@@ -125,7 +125,8 @@ class App extends React.Component<
 
                 <SelectedCardList cards={this.getSelectedCardsList()} selectedCards={this.state.selectedCards}
                                   onCardClick={this.selectCard.bind(this)}
-                                  onSelectionChange={this.setNewSelection.bind(this)} active={this.state.activeScreen === 'selection'}/>
+                                  onSelectionChange={this.setNewSelection.bind(this)}
+                                  active={this.state.activeScreen === 'selection'}/>
             </Container>
         );
     }
@@ -172,12 +173,19 @@ class SelectedCardList extends React.Component<SelectedCardListProps> {
 
         return (
             <Container className={!active ? "hidden" : ""}>
-                <Row className="text-center text-lg-start" ref={this.dragulaDecorator}>
-                    {cards.map(card => {
-                        return <CardView onCardClick={this.props.onCardClick} card={card} isSelected={isSelected(card)}
-                                         key={card.id}/>
-                    })}
-                </Row>
+                {cards.length > 0 ?
+                    <Row className="text-center text-lg-start" ref={this.dragulaDecorator}>
+                        {cards.map(card => {
+                            return <CardView onCardClick={this.props.onCardClick} card={card}
+                                             isSelected={isSelected(card)}
+                                             key={card.id}/>
+                        })}
+                    </Row>
+                    :
+                    <Row className="text-center text-lg-start">
+                        Nejsou vybrány žádné kartičky
+                    </Row>
+                }
             </Container>
         );
     }

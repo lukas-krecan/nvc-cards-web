@@ -19,6 +19,10 @@
 .selectedFeeling {
     background-color: #f2dbd4 !important;
 }
+.hidden {
+    display: none;
+}
+
 
 /* Navbar */
 @media (min-width: 400px) {

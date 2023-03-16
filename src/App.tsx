@@ -41,6 +41,12 @@ class App extends React.Component<
     private setNewSelection(ids: string[]) {
         this.setState({selectedCards: ids});
     }
+
+    private clean() {
+        this.setNewSelection([])
+    }
+
+
     private screenSelection(screenId: Screens, label: string) {
         const activeScreen = this.state.activeScreen;
 
@@ -62,40 +68,41 @@ class App extends React.Component<
                     <Navbar.Toggle aria-controls="navbarSupportedContent"/>
                     <Navbar.Collapse id="navbarSupportedContent">
                         <Nav>
-
+                            <Nav.Link onClick={this.clean.bind(this)}>Vymazat</Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>
 
                 <CardList cards={feelings} selectedCards={this.state.selectedCards}
-                          onCardClick={this.selectCard.bind(this)} />
+                          onCardClick={this.selectCard.bind(this)} active={this.state.activeScreen === 'feelings'}/>
 
                 <CardList cards={needs} selectedCards={this.state.selectedCards}
-                          onCardClick={this.selectCard.bind(this)}/>
+                          onCardClick={this.selectCard.bind(this)} active={this.state.activeScreen === 'needs'}/>
 
                 <SelectedCardList cards={this.getSelectedCardsList()} selectedCards={this.state.selectedCards}
                                   onCardClick={this.selectCard.bind(this)}
-                                  onSelectionChange={this.setNewSelection.bind(this)}/>
+                                  onSelectionChange={this.setNewSelection.bind(this)} active={this.state.activeScreen === 'selection'}/>
             </Container>
         );
     }
 }
 
 type CardListProps = {
+    active: boolean;
     cards: CardInfo[];
     selectedCards: string[];
     onCardClick: (card: CardInfo) => void;
 };
 
 const CardList = (props: CardListProps) => {
-    const {cards} = props;
+    const {cards, active} = props;
 
     const isSelected = (card: CardInfo): boolean => {
         return props.selectedCards.indexOf(card.id) !== -1;
     };
 
     return (
-        <Container>
+        <Container className={!active ? "hidden" : ""}>
             <Row className="text-center text-lg-start">
                 {cards.map(card => {
                     return <CardView onCardClick={props.onCardClick} card={card} isSelected={isSelected(card)}
@@ -113,14 +120,14 @@ type SelectedCardListProps = CardListProps & {
 class SelectedCardList extends React.Component<SelectedCardListProps> {
 
     render() {
-        const {cards} = this.props;
+        const {cards, active} = this.props;
 
         const isSelected = (card: CardInfo): boolean => {
             return this.props.selectedCards.indexOf(card.id) !== -1;
         };
 
         return (
-            <Container>
+            <Container className={!active ? "hidden" : ""}>
                 <Row className="text-center text-lg-start" ref={this.dragulaDecorator}>
                     {cards.map(card => {
                         return <CardView onCardClick={this.props.onCardClick} card={card} isSelected={isSelected(card)}

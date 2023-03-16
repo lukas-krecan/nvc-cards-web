@@ -25,6 +25,26 @@ class App extends React.Component<
         };
     }
 
+    componentDidMount() {
+        this.recoverState();
+    }
+
+    componentDidUpdate() {
+        this.saveState();
+    }
+
+    private recoverState() {
+        const result = localStorage.getItem('@last')
+        console.log('Recovering state: ' + result);
+        if (result != null) {
+            this.setState(JSON.parse(result));
+        }
+    }
+
+    private saveState() {
+        localStorage.setItem('@last', JSON.stringify(this.state));
+    }
+
     private getSelectedCardsList() {
         return this.state.selectedCards.map((id) => findCard(id));
     }

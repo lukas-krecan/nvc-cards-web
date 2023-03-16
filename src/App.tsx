@@ -43,12 +43,15 @@ class App extends React.Component<
             <Container>
                 <Navbar bg="light" expand="sm" sticky="top">
                     <NavbarBrand>NvcCards</NavbarBrand>
-                    <Navbar.Toggle aria-controls="navbarSupportedContent" />
+                    <Nav>
+                        <Nav.Link>Pocity</Nav.Link>
+                        <Nav.Link>Potřeby</Nav.Link>
+                        <Nav.Link>Výběr</Nav.Link>
+                    </Nav>
+                    <Navbar.Toggle aria-controls="navbarSupportedContent"/>
                     <Navbar.Collapse id="navbarSupportedContent">
                         <Nav>
-                            <Nav.Link>Pocity</Nav.Link>
-                            <Nav.Link>Potřeby</Nav.Link>
-                            <Nav.Link>Výběr</Nav.Link>
+
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>
@@ -63,7 +66,8 @@ class App extends React.Component<
                     </Tab>
                     <Tab eventKey="selection" title="Výběr" key="selection">
                         <SelectedCardList cards={this.getSelectedCardsList()} selectedCards={this.state.selectedCards}
-                                  onCardClick={this.selectCard.bind(this)} onSelectionChange={this.setNewSelection.bind(this)}/>
+                                          onCardClick={this.selectCard.bind(this)}
+                                          onSelectionChange={this.setNewSelection.bind(this)}/>
                     </Tab>
                 </Tabs>
             </Container>
@@ -123,8 +127,8 @@ class SelectedCardList extends React.Component<SelectedCardListProps> {
 
     dragulaDecorator = (componentBackingInstance: HTMLElement) => {
         if (componentBackingInstance) {
-            let options = { };
-            Dragula([componentBackingInstance], options).on('drop',  el => {
+            let options = {};
+            Dragula([componentBackingInstance], options).on('drop', el => {
                 const ids = this.getChildrenIds(componentBackingInstance);
                 this.props.onSelectionChange(ids)
             })

@@ -6,7 +6,10 @@ import Dragula from "react-dragula";
 
 type NvcCardsAppProps = {};
 
+type Screens = 'feelings' | 'needs' | 'selection';
+
 type NvcCardsAppState = {
+    activeScreen: Screens;
     selectedCards: string[];
 };
 
@@ -17,6 +20,7 @@ class App extends React.Component<
     constructor(props: NvcCardsAppProps) {
         super(props);
         this.state = {
+            activeScreen: 'feelings',
             selectedCards: [],
         };
     }
@@ -37,6 +41,13 @@ class App extends React.Component<
     private setNewSelection(ids: string[]) {
         this.setState({selectedCards: ids});
     }
+    private screenSelection(screenId: Screens, label: string) {
+        const activeScreen = this.state.activeScreen;
+
+        return <Nav.Link active={activeScreen == screenId}
+                         onClick={() => this.setState({activeScreen: screenId})}>{label}</Nav.Link>;
+    }
+
 
     render() {
         return (
@@ -44,9 +55,9 @@ class App extends React.Component<
                 <Navbar bg="light" expand="sm" sticky="top">
                     <NavbarBrand>NvcCards</NavbarBrand>
                     <Nav>
-                        <Nav.Link>Pocity</Nav.Link>
-                        <Nav.Link>Potřeby</Nav.Link>
-                        <Nav.Link>Výběr</Nav.Link>
+                        {this.screenSelection('feelings', 'Pocity')}
+                        {this.screenSelection('needs', 'Potřeby')}
+                        {this.screenSelection('selection', 'Výběr')}
                     </Nav>
                     <Navbar.Toggle aria-controls="navbarSupportedContent"/>
                     <Navbar.Collapse id="navbarSupportedContent">
@@ -55,21 +66,16 @@ class App extends React.Component<
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>
-                <Tabs>
-                    <Tab eventKey="needs" title="Potřeby" key="needs">
-                        <CardList cards={needs} selectedCards={this.state.selectedCards}
-                                  onCardClick={this.selectCard.bind(this)}/>
-                    </Tab>
-                    <Tab eventKey="feelings" title="Pocity" key="feelings">
-                        <CardList cards={feelings} selectedCards={this.state.selectedCards}
-                                  onCardClick={this.selectCard.bind(this)}/>
-                    </Tab>
-                    <Tab eventKey="selection" title="Výběr" key="selection">
-                        <SelectedCardList cards={this.getSelectedCardsList()} selectedCards={this.state.selectedCards}
-                                          onCardClick={this.selectCard.bind(this)}
-                                          onSelectionChange={this.setNewSelection.bind(this)}/>
-                    </Tab>
-                </Tabs>
+
+                <CardList cards={feelings} selectedCards={this.state.selectedCards}
+                          onCardClick={this.selectCard.bind(this)} />
+
+                <CardList cards={needs} selectedCards={this.state.selectedCards}
+                          onCardClick={this.selectCard.bind(this)}/>
+
+                <SelectedCardList cards={this.getSelectedCardsList()} selectedCards={this.state.selectedCards}
+                                  onCardClick={this.selectCard.bind(this)}
+                                  onSelectionChange={this.setNewSelection.bind(this)}/>
             </Container>
         );
     }

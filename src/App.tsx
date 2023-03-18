@@ -82,6 +82,7 @@ class App extends React.Component<
         return (
             <Container>
                 <Navbar collapseOnSelect
+                        bg="light"
                         expand="sm"
                         sticky="top"
                         expanded={this.state.navBarExpanded}

@@ -80,9 +80,8 @@ class App extends React.Component<
 
     render() {
         return (
-            <Container className="blue-color">
+            <Container>
                 <Navbar collapseOnSelect
-                        className="blue-color"
                         expand="sm"
                         sticky="top"
                         expanded={this.state.navBarExpanded}

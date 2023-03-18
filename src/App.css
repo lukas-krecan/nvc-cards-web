@@ -23,6 +23,11 @@
     display: none;
 }
 
+.blue-color {
+    background-color: #DFF1F1
+}
+
+
 /* Navbar */
 @media (min-width: 400px) {
     .navbar-expand-sm .navbar-nav {

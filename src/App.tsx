@@ -87,7 +87,7 @@ class App extends React.Component<
                         sticky="top"
                         expanded={this.state.navBarExpanded}
                         onToggle={expanded => this.setState({navBarExpanded: expanded})}>
-                    <NavbarBrand>NvcCards</NavbarBrand>
+                    <NavbarBrand>NVC kartičky</NavbarBrand>
                     <Nav>
                         {this.screenSelection('feelings', 'Pocity')}
                         {this.screenSelection('needs', 'Potřeby')}

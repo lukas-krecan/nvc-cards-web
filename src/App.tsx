@@ -111,6 +111,9 @@ class App extends React.Component<
                                     <Nav>
                                         <Nav.Link onClick={this.clean.bind(this)}>Vymazat</Nav.Link>
                                     </Nav>
+                                    <Nav>
+                                        <Nav.Link href="https://lukas-krecan.github.io/nvc-cards-web/help.html" target="_blank">Nápověda</Nav.Link>
+                                    </Nav>
                                 </Navbar.Collapse>
                             </Nav>
                         </Offcanvas.Body>

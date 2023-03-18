@@ -23,11 +23,6 @@
     display: none;
 }
 
-.bg-light {
-    --bs-light-rgb: #9AE8F1
-}
-
-
 /* Navbar */
 @media (min-width: 400px) {
     .navbar-expand-sm .navbar-nav {

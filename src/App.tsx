@@ -76,7 +76,7 @@ class App extends React.Component<
     }
 
     private hideModal() {
-        this.setState({modalShown: false});
+        this.setState({modalShown: false, navBarExpanded: false});
     }
 
 

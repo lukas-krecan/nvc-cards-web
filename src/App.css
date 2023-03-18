@@ -20,7 +20,10 @@
     background-color: #f2dbd4 !important;
 }
 .hidden {
-    display: none;
+    display: none !important;
+}
+.nav-link.active {
+    font-weight: 500;
 }
 
 

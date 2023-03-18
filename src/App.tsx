@@ -70,15 +70,17 @@ class App extends React.Component<
     }
 
 
-    private screenSelection(screenId: Screens, label: string) {
+    private screenSelection(screenId: Screens, label: string, disabled: boolean = false) {
         const activeScreen = this.state.activeScreen;
 
         return <Nav.Link active={activeScreen === screenId}
+                         disabled={disabled}
                          onClick={() => this.setState({activeScreen: screenId})}>{label}</Nav.Link>;
     }
 
 
     render() {
+        const noCardsSelected = this.state.selectedCards.length === 0;
         return (
             <Container>
                 <Navbar collapseOnSelect
@@ -91,7 +93,7 @@ class App extends React.Component<
                     <Nav>
                         {this.screenSelection('feelings', 'Pocity')}
                         {this.screenSelection('needs', 'Potřeby')}
-                        {this.screenSelection('selection', 'Výběr')}
+                        {this.screenSelection('selection', 'Výběr', noCardsSelected)}
                     </Nav>
                     <Navbar.Toggle aria-controls={`offcanvasNavbar-expand`}/>
                     <Navbar.Offcanvas
@@ -109,10 +111,11 @@ class App extends React.Component<
                                 <Navbar.Toggle aria-controls="navbarSupportedContent"/>
                                 <Navbar.Collapse id="navbarSupportedContent">
                                     <Nav>
-                                        <Nav.Link onClick={this.clean.bind(this)}>Vymazat</Nav.Link>
+                                        <Nav.Link onClick={this.clean.bind(this)} disabled={noCardsSelected}>Vymazat</Nav.Link>
                                     </Nav>
                                     <Nav>
-                                        <Nav.Link href="https://lukas-krecan.github.io/nvc-cards-web/help.html" target="_blank">Nápověda</Nav.Link>
+                                        <Nav.Link href="https://lukas-krecan.github.io/nvc-cards-web/help.html"
+                                                  target="_blank">Nápověda</Nav.Link>
                                     </Nav>
                                 </Navbar.Collapse>
                             </Nav>
@@ -165,6 +168,10 @@ type SelectedCardListProps = CardListProps & {
     onSelectionChange: (ids: string[]) => void
 };
 
+function hideIf(cond: boolean) {
+    return cond ? " hidden" : "";
+}
+
 class SelectedCardList extends React.Component<SelectedCardListProps> {
 
     render() {
@@ -175,20 +182,18 @@ class SelectedCardList extends React.Component<SelectedCardListProps> {
         };
 
         return (
-            <Container className={!active ? "hidden" : ""}>
-                {cards.length > 0 ?
-                    <Row className="text-center text-lg-start" ref={this.dragulaDecorator}>
-                        {cards.map(card => {
-                            return <CardView onCardClick={this.props.onCardClick} card={card}
-                                             isSelected={isSelected(card)}
-                                             key={card.id}/>
-                        })}
-                    </Row>
-                    :
-                    <Row className="text-center text-lg-start">
-                        Nejsou vybrány žádné kartičky
-                    </Row>
-                }
+            <Container className={hideIf(!active)}>
+                <Row className={"text-center text-lg-start" + hideIf(cards.length === 0)} ref={this.dragulaDecorator}>
+                    {cards.map(card => {
+                        return <CardView onCardClick={this.props.onCardClick} card={card}
+                                         isSelected={isSelected(card)}
+                                         key={card.id}/>
+                    })}
+                </Row>
+
+                <Row className={"text-center text-lg-start" + hideIf(cards.length > 0)}>
+                    Nejsou vybrány žádné kartičky
+                </Row>
             </Container>
         );
     }

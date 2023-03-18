@@ -80,63 +80,17 @@ class App extends React.Component<
     }
 
 
-    private screenSelection(screenId: Screens, label: string, disabled: boolean = false) {
-        const activeScreen = this.state.activeScreen;
-
-        return <Nav.Link active={activeScreen === screenId}
-                         disabled={disabled}
-                         onClick={() => this.setState({activeScreen: screenId})}>{label}</Nav.Link>;
-    }
-
-
     render() {
         const noCardsSelected = this.state.selectedCards.length === 0;
         return (
             <Container>
-                <Navbar collapseOnSelect
-                        bg="light"
-                        expand="sm"
-                        sticky="top"
-                        expanded={this.state.navBarExpanded}
-                        onToggle={expanded => this.setState({navBarExpanded: expanded})}>
-                    <NavbarBrand>NVC kartičky</NavbarBrand>
-                    <Nav>
-                        {this.screenSelection('feelings', 'Pocity')}
-                        {this.screenSelection('needs', 'Potřeby')}
-                        {this.screenSelection('selection', 'Výběr', noCardsSelected)}
-                    </Nav>
-                    <Navbar.Toggle aria-controls={`offcanvasNavbar-expand`}/>
-                    <Navbar.Offcanvas
-                        id={`offcanvasNavbar-expand`}
-                        aria-labelledby={`offcanvasNavbarLabel-expand`}
-                        placement="end"
-                    >
-                        <Offcanvas.Header closeButton>
-                            <Offcanvas.Title id={`offcanvasNavbarLabel-expand`}>
-                                NVC Kartičky
-                            </Offcanvas.Title>
-                        </Offcanvas.Header>
-                        <Offcanvas.Body>
-                            <Nav className="justify-content-end flex-grow-1 pe-3">
-                                <Navbar.Toggle aria-controls="navbarSupportedContent"/>
-                                <Navbar.Collapse id="navbarSupportedContent">
-                                    <Nav>
-                                        <Nav.Link onClick={this.clean.bind(this)}
-                                                  disabled={noCardsSelected}>Vymazat</Nav.Link>
-                                    </Nav>
-                                    <Nav>
-                                        <Nav.Link onClick={this.share.bind(this)}
-                                                  disabled={noCardsSelected}>Sdílet</Nav.Link>
-                                    </Nav>
-                                    <Nav>
-                                        <Nav.Link href="https://lukas-krecan.github.io/nvc-cards-web/help.html"
-                                                  target="_blank">Nápověda</Nav.Link>
-                                    </Nav>
-                                </Navbar.Collapse>
-                            </Nav>
-                        </Offcanvas.Body>
-                    </Navbar.Offcanvas>
-                </Navbar>
+                <Navigation expanded={this.state.navBarExpanded}
+                            toggle={expanded => this.setState({navBarExpanded: expanded})}
+                            activeScreen={this.state.activeScreen}
+                            setActiveScreen={screen => this.setState({activeScreen: screen})}
+                            noCardsSelected={noCardsSelected}
+                            clean={this.clean.bind(this)}
+                            share={this.share.bind(this)}/>
 
                 <CardList cards={feelings} selectedCards={this.state.selectedCards}
                           onCardClick={this.selectCard.bind(this)} active={this.state.activeScreen === 'feelings'}/>
@@ -153,6 +107,74 @@ class App extends React.Component<
                              handleClose={this.hideModal.bind(this)}/>
             </Container>
         );
+    }
+}
+
+type NavigationProps = {
+    expanded: boolean,
+    activeScreen: Screens,
+    toggle: (expanded: boolean) => void,
+    noCardsSelected: boolean,
+    share: () => void,
+    clean: () => void,
+    setActiveScreen: (screen: Screens) => void
+}
+
+class Navigation extends React.Component<NavigationProps> {
+
+    private screenSelection(screenId: Screens, label: string, disabled: boolean = false) {
+        const activeScreen = this.props.activeScreen;
+
+        return <Nav.Link active={activeScreen === screenId}
+                         disabled={disabled}
+                         onClick={() => this.props.setActiveScreen(screenId)}>{label}</Nav.Link>;
+    }
+
+    render() {
+        return <Navbar collapseOnSelect
+                       bg="light"
+                       expand="sm"
+                       sticky="top"
+                       expanded={this.props.expanded}
+                       onToggle={this.props.toggle}>
+            <NavbarBrand>NVC kartičky</NavbarBrand>
+            <Nav>
+                {this.screenSelection('feelings', 'Pocity')}
+                {this.screenSelection('needs', 'Potřeby')}
+                {this.screenSelection('selection', 'Výběr', this.props.noCardsSelected)}
+            </Nav>
+            <Navbar.Toggle aria-controls={`offcanvasNavbar-expand`}/>
+            <Navbar.Offcanvas
+                id={`offcanvasNavbar-expand`}
+                aria-labelledby={`offcanvasNavbarLabel-expand`}
+                placement="end"
+            >
+                <Offcanvas.Header closeButton>
+                    <Offcanvas.Title id={`offcanvasNavbarLabel-expand`}>
+                        NVC Kartičky
+                    </Offcanvas.Title>
+                </Offcanvas.Header>
+                <Offcanvas.Body>
+                    <Nav className="justify-content-end flex-grow-1 pe-3">
+                        <Navbar.Toggle aria-controls="navbarSupportedContent"/>
+                        <Navbar.Collapse id="navbarSupportedContent">
+                            <Nav>
+                                <Nav.Link onClick={this.props.clean}
+                                          disabled={this.props.noCardsSelected}>Vymazat</Nav.Link>
+                            </Nav>
+                            <Nav>
+                                <Nav.Link onClick={this.props.share}
+                                          disabled={this.props.noCardsSelected}>Sdílet</Nav.Link>
+                            </Nav>
+                            <Nav>
+                                <Nav.Link href="https://lukas-krecan.github.io/nvc-cards-web/help.html"
+                                          target="_blank">Nápověda</Nav.Link>
+                            </Nav>
+                        </Navbar.Collapse>
+                    </Nav>
+                </Offcanvas.Body>
+            </Navbar.Offcanvas>
+        </Navbar>;
     }
 }
 

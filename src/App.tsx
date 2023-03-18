@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import {CardData, CardInfo, feelings, findCard, needs} from './Data';
-import {Card, Container, Nav, Navbar, NavbarBrand, Row, Offcanvas} from "react-bootstrap";
+import {Card, Container, Nav, Navbar, NavbarBrand, Row, Offcanvas, Modal, Button} from "react-bootstrap";
 import Dragula from "react-dragula";
 
 type NvcCardsAppProps = {};
@@ -13,6 +13,8 @@ type NvcCardsAppState = {
     selectedCards: string[];
 
     navBarExpanded: boolean;
+
+    modalShown: boolean;
 };
 
 class App extends React.Component<
@@ -24,7 +26,8 @@ class App extends React.Component<
         this.state = {
             activeScreen: 'feelings',
             selectedCards: [],
-            navBarExpanded: false
+            navBarExpanded: false,
+            modalShown: false
         };
     }
 
@@ -38,7 +41,6 @@ class App extends React.Component<
 
     private recoverState() {
         const result = localStorage.getItem('@last')
-        console.log('Recovering state: ' + result);
         if (result != null) {
             this.setState(JSON.parse(result));
         }
@@ -67,6 +69,14 @@ class App extends React.Component<
 
     private clean() {
         this.setNewSelection([])
+    }
+
+    private share() {
+        this.setState({modalShown: true});
+    }
+
+    private hideModal() {
+        this.setState({modalShown: false});
     }
 
 
@@ -111,7 +121,12 @@ class App extends React.Component<
                                 <Navbar.Toggle aria-controls="navbarSupportedContent"/>
                                 <Navbar.Collapse id="navbarSupportedContent">
                                     <Nav>
-                                        <Nav.Link onClick={this.clean.bind(this)} disabled={noCardsSelected}>Vymazat</Nav.Link>
+                                        <Nav.Link onClick={this.clean.bind(this)}
+                                                  disabled={noCardsSelected}>Vymazat</Nav.Link>
+                                    </Nav>
+                                    <Nav>
+                                        <Nav.Link onClick={this.share.bind(this)}
+                                                  disabled={noCardsSelected}>Sdílet</Nav.Link>
                                     </Nav>
                                     <Nav>
                                         <Nav.Link href="https://lukas-krecan.github.io/nvc-cards-web/help.html"
@@ -133,6 +148,9 @@ class App extends React.Component<
                                   onCardClick={this.selectCard.bind(this)}
                                   onSelectionChange={this.setNewSelection.bind(this)}
                                   active={this.state.activeScreen === 'selection'}/>
+
+                <ModalDialog selectedCards={this.getSelectedCardsList()} show={this.state.modalShown}
+                             handleClose={this.hideModal.bind(this)}/>
             </Container>
         );
     }
@@ -258,6 +276,51 @@ const CardView = (props: CardProps) => {
             {card.data.map((t, i) => <p className={fontClass(t)} key={i}>{t.text}</p>)}
         </div>
     </Card>
+}
+
+type ModalDialogProps = {
+    selectedCards: CardInfo[];
+    show: boolean;
+    handleClose: () => void;
+};
+
+
+class ModalDialog extends React.Component<ModalDialogProps> {
+    constructor(props: ModalDialogProps) {
+        super(props);
+    }
+
+    render() {
+        const show = this.props.show;
+        return <Modal show={show} onHide={this.props.handleClose}>
+            <Modal.Header closeButton>
+                <Modal.Title>Vybrané kartičky</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>{this.concatSelectedCards(this.props.selectedCards)}</Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={this.copyToClipboard.bind(this)}>
+                    Zkopírovat do schránky
+                </Button>
+            </Modal.Footer>
+        </Modal>
+    }
+
+    private copyToClipboard() {
+        const textToShare = this.props.selectedCards
+            .map((card) => card.data.map((d) => d.text).join(', '))
+            .map((text) => `- ${text}`)
+            .join('\n');
+
+
+        navigator.clipboard.writeText(textToShare)
+    }
+
+    private concatSelectedCards(cards: CardInfo[]) {
+        return cards
+            .map((card) => card.data.map((d) => d.text).join(', '))
+            .map((text, i) => <div key={i}>- {text}</div>);
+    }
+
 }
 
 export default App;

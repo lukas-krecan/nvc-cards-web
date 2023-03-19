@@ -137,7 +137,7 @@ class Navigation extends React.Component<NavigationProps> {
                        sticky="top"
                        expanded={this.props.expanded}
                        onToggle={this.props.toggle}>
-            <NavbarBrand>NVC kartičky</NavbarBrand>
+            <NavbarBrand>NVC</NavbarBrand>
             <Nav>
                 {this.screenSelection('feelings', 'Pocity')}
                 {this.screenSelection('needs', 'Potřeby')}

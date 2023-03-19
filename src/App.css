@@ -28,13 +28,13 @@
 
 
 /* Navbar */
-@media (min-width: 400px) {
+@media (min-width: 375px) {
     .navbar-expand-sm .navbar-nav {
         flex-direction: row;
     }
 }
 
-@media (min-width: 400px) {
+@media (min-width: 375px) {
     .navbar-expand-sm .navbar-nav .nav-link {
         padding-right: var(--bs-navbar-nav-link-padding-x);
         padding-left: var(--bs-navbar-nav-link-padding-x);

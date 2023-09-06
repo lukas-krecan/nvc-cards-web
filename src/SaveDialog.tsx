@@ -10,6 +10,7 @@ type SaveDialogProps = {
 
 class SaveDialog extends React.Component<SaveDialogProps> {
     onSubmit = (e: FormEvent) => {
+        e.preventDefault()
         const formData = new FormData(e.target as HTMLFormElement);
         this.props.handleSave(formData.get('name') as string);
     }

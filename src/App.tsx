@@ -1,12 +1,12 @@
 import React from 'react';
 import './App.css';
 import {CardInfo, feelings, findCard, needs} from './Data';
-import {Container, Nav, Navbar, NavbarBrand, Offcanvas, Row} from "react-bootstrap";
+import {Container, Row} from "react-bootstrap";
 import Dragula from "react-dragula";
 import SaveDialog from "./SaveDialog";
 import ShareDialog from "./ShareDialog";
 import CardView from "./CardView";
-import {SavedState, Screens} from "./types";
+import {SavedState, Screens, StateToBeSaved} from "./types";
 import Navigation from "./Navigation";
 import LoadDialog from "./LoadDialog";
 
@@ -21,8 +21,21 @@ type NvcCardsAppState = {
 
     navBarExpanded: boolean;
 
-    modalShown: Modals | null ;
+    modalShown: Modals | null;
+
+    savedStates: SavedState[];
 };
+
+function loadSavedStates(): SavedState[] {
+    return Object.entries(localStorage)
+        .filter(entry => entry[0].startsWith('saved-'))
+        .map((entry: [string, string]) => {
+            const saved = JSON.parse(entry[1]);
+            saved.key = entry[0]
+            return saved;
+        })
+        .sort((a, b) => a.savedAt < b.savedAt ? 1 : -1)
+}
 
 class App extends React.Component<
     NvcCardsAppProps,
@@ -35,6 +48,7 @@ class App extends React.Component<
             selectedCards: [],
             navBarExpanded: false,
             modalShown: null,
+            savedStates: loadSavedStates()
         };
     }
 
@@ -74,6 +88,11 @@ class App extends React.Component<
         }));
     }
 
+    private deleteSavedState(saved: SavedState) {
+        localStorage.removeItem(saved.key);
+        this.setState({savedStates: loadSavedStates(), modalShown: null})
+    }
+
     private getSelectedCardsList() {
         return this.state.selectedCards.map((id) => findCard(id));
     }
@@ -104,12 +123,13 @@ class App extends React.Component<
     }
 
     private handleSave(name: string) {
-        const storedState: SavedState = {
+        const stateToBeSaved: StateToBeSaved = {
             selectedCards: this.state.selectedCards,
             name: name,
             savedAt: new Date().toISOString()
         };
-        localStorage.setItem('saved-' + new Date().toISOString(), JSON.stringify(storedState));
+        localStorage.setItem('saved-' + new Date().toISOString(), JSON.stringify(stateToBeSaved));
+        this.setState({savedStates: loadSavedStates(), modalShown: null});
     }
 
     private hideModals() {
@@ -152,11 +172,13 @@ class App extends React.Component<
 
                 <LoadDialog show={this.state.modalShown === 'load'}
                             handleClose={this.hideModals.bind(this)}
-                            savedStates={[]}
-                            handleLoad={(saved) => this.setStoredState(saved.selectedCards, 'selection')}/>
+                            savedStates={this.state.savedStates}
+                            handleLoad={(saved) => this.setStoredState(saved.selectedCards, 'selection')}
+                            handleDelete={(saved) => this.deleteSavedState(saved)}/>
             </Container>
         );
     }
+
 }
 
 type CardListProps = {

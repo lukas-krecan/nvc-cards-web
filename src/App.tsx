@@ -90,7 +90,7 @@ class App extends React.Component<
 
     private deleteSavedState(saved: SavedState) {
         localStorage.removeItem(saved.key);
-        this.setState({savedStates: loadSavedStates(), modalShown: null})
+        this.setState({savedStates: loadSavedStates()})
     }
 
     private getSelectedCardsList() {

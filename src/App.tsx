@@ -160,7 +160,7 @@ class Navigation extends React.Component<NavigationProps> {
                         <Navbar.Collapse id="navbarSupportedContent">
                             <Nav>
                                 <Nav.Link onClick={this.props.clean}
-                                          disabled={this.props.noCardsSelected}>Vymazat</Nav.Link>
+                                          disabled={this.props.noCardsSelected}>Vymazat výběr</Nav.Link>
                             </Nav>
                             <Nav>
                                 <Nav.Link onClick={this.props.share}

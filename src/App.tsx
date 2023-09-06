@@ -146,6 +146,7 @@ class App extends React.Component<
                             activeScreen={this.state.activeScreen}
                             setActiveScreen={screen => this.setState({activeScreen: screen})}
                             noCardsSelected={noCardsSelected}
+                            hasSavedStates={this.state.savedStates.length > 0}
                             clean={this.clean.bind(this)}
                             share={() => this.showModal('share')}
                             save={() => this.showModal('save')}

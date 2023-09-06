@@ -7,6 +7,7 @@ type NavigationProps = {
     activeScreen: Screens,
     toggle: (expanded: boolean) => void,
     noCardsSelected: boolean,
+    hasSavedStates: boolean,
     share: () => void,
     clean: () => void,
     save: () => void,
@@ -57,7 +58,9 @@ class Navigation extends React.Component<NavigationProps> {
                                           disabled={this.props.noCardsSelected}>Vymazat výběr</Nav.Link>
                             </Nav>
                             <Nav>
-                                <Nav.Link onClick={this.props.load}>Načíst</Nav.Link>
+                                <Nav.Link onClick={this.props.load} disabled={!this.props.hasSavedStates}>
+                                    Načíst
+                                </Nav.Link>
                             </Nav>
                             <Nav>
                                 <Nav.Link onClick={this.props.save}

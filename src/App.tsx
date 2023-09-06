@@ -1,8 +1,10 @@
 import React from 'react';
 import './App.css';
 import {CardData, CardInfo, feelings, findCard, needs} from './Data';
-import {Card, Container, Nav, Navbar, NavbarBrand, Row, Offcanvas, Modal, Button} from "react-bootstrap";
+import {Card, Container, Nav, Navbar, NavbarBrand, Offcanvas, Row} from "react-bootstrap";
 import Dragula from "react-dragula";
+import SaveDialog from "./SaveDialog";
+import ShareDialog from "./ShareDialog";
 
 type NvcCardsAppProps = {};
 
@@ -14,7 +16,9 @@ type NvcCardsAppState = {
 
     navBarExpanded: boolean;
 
-    modalShown: boolean;
+    shareModalShown: boolean;
+
+    saveModalShown: boolean;
 };
 
 class App extends React.Component<
@@ -27,7 +31,8 @@ class App extends React.Component<
             activeScreen: 'feelings',
             selectedCards: [],
             navBarExpanded: false,
-            modalShown: false
+            shareModalShown: false,
+            saveModalShown: false
         };
     }
 
@@ -41,13 +46,31 @@ class App extends React.Component<
 
     private recoverState() {
         const result = localStorage.getItem('@last')
-        if (result != null) {
-            this.setState(JSON.parse(result));
+        try {
+            if (result != null) {
+                const savedResult = JSON.parse(result);
+                this.setStoredState(savedResult.selectedCards, savedResult.activeScreen)
+            }
+        } catch (e) {
+            console.error(e);
         }
     }
 
+    private setStoredState(selectedCards: string[], activeScreen: Screens) {
+        this.setState({
+            activeScreen: activeScreen,
+            selectedCards: selectedCards,
+            navBarExpanded: false,
+            shareModalShown: false,
+            saveModalShown: false
+        });
+    }
+
     private saveState() {
-        localStorage.setItem('@last', JSON.stringify(this.state));
+        localStorage.setItem('@last', JSON.stringify({
+            activeScreen: this.state.activeScreen,
+            selectedCards: this.state.selectedCards,
+        }));
     }
 
     private getSelectedCardsList() {
@@ -72,11 +95,24 @@ class App extends React.Component<
     }
 
     private share() {
-        this.setState({modalShown: true});
+        this.setState({shareModalShown: true});
     }
 
-    private hideModal() {
-        this.setState({modalShown: false, navBarExpanded: false});
+    private save() {
+        this.setState({saveModalShown: true});
+    }
+
+    private handleSave(name: string) {
+        localStorage.setItem('saved-' + new Date().toISOString(), JSON.stringify({
+            activeScreen: this.state.activeScreen,
+            selectedCards: this.state.selectedCards,
+            name: name,
+            savedAt: new Date()
+        }));
+    }
+
+    private hideModals() {
+        this.setState({shareModalShown: false, navBarExpanded: false, saveModalShown: false});
     }
 
 
@@ -90,7 +126,9 @@ class App extends React.Component<
                             setActiveScreen={screen => this.setState({activeScreen: screen})}
                             noCardsSelected={noCardsSelected}
                             clean={this.clean.bind(this)}
-                            share={this.share.bind(this)}/>
+                            share={this.share.bind(this)}
+                            save={this.save.bind(this)}
+                />
 
                 <CardList cards={feelings} selectedCards={this.state.selectedCards}
                           onCardClick={this.selectCard.bind(this)} active={this.state.activeScreen === 'feelings'}/>
@@ -103,8 +141,12 @@ class App extends React.Component<
                                   onSelectionChange={this.setNewSelection.bind(this)}
                                   active={this.state.activeScreen === 'selection'}/>
 
-                <ModalDialog selectedCards={this.getSelectedCardsList()} show={this.state.modalShown}
-                             handleClose={this.hideModal.bind(this)}/>
+                <ShareDialog selectedCards={this.getSelectedCardsList()} show={this.state.shareModalShown}
+                             handleClose={this.hideModals.bind(this)}/>
+
+                <SaveDialog show={this.state.saveModalShown}
+                            handleSave={this.handleSave.bind(this)}
+                            handleClose={this.hideModals.bind(this)}/>
             </Container>
         );
     }
@@ -117,6 +159,7 @@ type NavigationProps = {
     noCardsSelected: boolean,
     share: () => void,
     clean: () => void,
+    save: () => void,
     setActiveScreen: (screen: Screens) => void
 }
 
@@ -161,6 +204,10 @@ class Navigation extends React.Component<NavigationProps> {
                             <Nav>
                                 <Nav.Link onClick={this.props.clean}
                                           disabled={this.props.noCardsSelected}>Vymazat výběr</Nav.Link>
+                            </Nav>
+                            <Nav>
+                                <Nav.Link onClick={this.props.save}
+                                          disabled={this.props.noCardsSelected}>Uložit</Nav.Link>
                             </Nav>
                             <Nav>
                                 <Nav.Link onClick={this.props.share}
@@ -298,47 +345,6 @@ const CardView = (props: CardProps) => {
             {card.data.map((t, i) => <span className={fontClass(t)} key={i}>{t.text}</span>)}
         </div>
     </Card>
-}
-
-type ModalDialogProps = {
-    selectedCards: CardInfo[];
-    show: boolean;
-    handleClose: () => void;
-};
-
-
-class ModalDialog extends React.Component<ModalDialogProps> {
-    render() {
-        const show = this.props.show;
-        return <Modal show={show} onHide={this.props.handleClose}>
-            <Modal.Header closeButton>
-                <Modal.Title>Vybrané kartičky</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>{this.concatSelectedCards(this.props.selectedCards)}</Modal.Body>
-            <Modal.Footer>
-                <Button variant="secondary" onClick={this.copyToClipboard.bind(this)}>
-                    Zkopírovat do schránky
-                </Button>
-            </Modal.Footer>
-        </Modal>
-    }
-
-    private copyToClipboard() {
-        const textToShare = this.props.selectedCards
-            .map((card) => card.data.map((d) => d.text).join(', '))
-            .map((text) => `- ${text}`)
-            .join('\n');
-
-
-        navigator.clipboard.writeText(textToShare)
-    }
-
-    private concatSelectedCards(cards: CardInfo[]) {
-        return cards
-            .map((card) => card.data.map((d) => d.text).join(', '))
-            .map((text, i) => <div key={i}>- {text}</div>);
-    }
-
 }
 
 export default App;

@@ -294,8 +294,8 @@ const CardView = (props: CardProps) => {
         onClick={_ => props.onCardClick(card)}
         id={card.id}
     >
-        <div className="card-body">
-            {card.data.map((t, i) => <p className={fontClass(t)} key={i}>{t.text}</p>)}
+        <div className="card-body d-flex flex-column justify-content-center align-items-center">
+            {card.data.map((t, i) => <span className={fontClass(t)} key={i}>{t.text}</span>)}
         </div>
     </Card>
 }

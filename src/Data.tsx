@@ -30,7 +30,7 @@ export const needs: CardInfo[] = [
     {"id":"n19", data:[{text:'Přátelství'}, {text:'Blízkost'}]},
     {"id":"n20", data:[{text:'Progres'}, {text:'Efektivita'}]},
     {"id":"n21", data:[{text:'Prostor'}, {text:'Prostornost ve fyzickém prostoru'}, {text:'v čase, v konverzaci', size: 3}]},
-    {"id":"n22", data:[{text:'Respekt'}, {text:'být brán vážně', size: 2}, {text:'pocit \"na mě záleží\"', size: 2}]},
+    {"id":"n22", data:[{text:'Respekt'}, {text:'být brán vážně', size: 2}, {text:'pocit "na mě záleží"', size: 2}]},
     {"id":"n23", data:[{text:'Sdílení'}]},
     {"id":"n24", data:[{text:'Moc, vliv'}, {text:'Vliv na věci, které se mě týkají'}]},
     {"id":"n25", data:[{text:'Soustředění'}]},
@@ -100,8 +100,8 @@ export const feelings: CardInfo[] = [
 
 export function findCard(id: string): CardInfo {
     if (id.startsWith('n')) {
-        return needs.find(c => c.id == id) || {"id": id, data: []}
+        return needs.find(c => c.id === id) || {"id": id, data: []}
     } else {
-        return feelings.find(c => c.id == id) || {"id": id, data: []}
+        return feelings.find(c => c.id === id) || {"id": id, data: []}
     }
 }

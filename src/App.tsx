@@ -308,10 +308,6 @@ type ModalDialogProps = {
 
 
 class ModalDialog extends React.Component<ModalDialogProps> {
-    constructor(props: ModalDialogProps) {
-        super(props);
-    }
-
     render() {
         const show = this.props.show;
         return <Modal show={show} onHide={this.props.handleClose}>

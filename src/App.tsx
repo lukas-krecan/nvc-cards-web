@@ -6,20 +6,22 @@ import Dragula from "react-dragula";
 import SaveDialog from "./SaveDialog";
 import ShareDialog from "./ShareDialog";
 import CardView from "./CardView";
+import {SavedState, Screens} from "./types";
+import Navigation from "./Navigation";
+import LoadDialog from "./LoadDialog";
 
 type NvcCardsAppProps = {};
 
-type Screens = 'feelings' | 'needs' | 'selection';
+type Modals = 'share' | 'save' | 'load'
 
 type NvcCardsAppState = {
     activeScreen: Screens;
+
     selectedCards: string[];
 
     navBarExpanded: boolean;
 
-    shareModalShown: boolean;
-
-    saveModalShown: boolean;
+    modalShown: Modals | null ;
 };
 
 class App extends React.Component<
@@ -32,8 +34,7 @@ class App extends React.Component<
             activeScreen: 'feelings',
             selectedCards: [],
             navBarExpanded: false,
-            shareModalShown: false,
-            saveModalShown: false
+            modalShown: null,
         };
     }
 
@@ -62,8 +63,7 @@ class App extends React.Component<
             activeScreen: activeScreen,
             selectedCards: selectedCards,
             navBarExpanded: false,
-            shareModalShown: false,
-            saveModalShown: false
+            modalShown: null
         });
     }
 
@@ -95,25 +95,25 @@ class App extends React.Component<
         this.setNewSelection([])
     }
 
-    private share() {
-        this.setState({shareModalShown: true});
+    private showModal(modal: Modals) {
+        this.setState({modalShown: modal});
     }
 
     private save() {
-        this.setState({saveModalShown: true});
+        this.setState({modalShown: 'save'});
     }
 
     private handleSave(name: string) {
-        localStorage.setItem('saved-' + new Date().toISOString(), JSON.stringify({
-            activeScreen: this.state.activeScreen,
+        const storedState: SavedState = {
             selectedCards: this.state.selectedCards,
             name: name,
-            savedAt: new Date()
-        }));
+            savedAt: new Date().toISOString()
+        };
+        localStorage.setItem('saved-' + new Date().toISOString(), JSON.stringify(storedState));
     }
 
     private hideModals() {
-        this.setState({shareModalShown: false, navBarExpanded: false, saveModalShown: false});
+        this.setState({modalShown: null, navBarExpanded: false});
     }
 
 
@@ -127,8 +127,9 @@ class App extends React.Component<
                             setActiveScreen={screen => this.setState({activeScreen: screen})}
                             noCardsSelected={noCardsSelected}
                             clean={this.clean.bind(this)}
-                            share={this.share.bind(this)}
-                            save={this.save.bind(this)}
+                            share={() => this.showModal('share')}
+                            save={() => this.showModal('save')}
+                            load={() => this.showModal('load')}
                 />
 
                 <CardList cards={feelings} selectedCards={this.state.selectedCards}
@@ -142,87 +143,19 @@ class App extends React.Component<
                                   onSelectionChange={this.setNewSelection.bind(this)}
                                   active={this.state.activeScreen === 'selection'}/>
 
-                <ShareDialog selectedCards={this.getSelectedCardsList()} show={this.state.shareModalShown}
+                <ShareDialog selectedCards={this.getSelectedCardsList()} show={this.state.modalShown === 'share'}
                              handleClose={this.hideModals.bind(this)}/>
 
-                <SaveDialog show={this.state.saveModalShown}
+                <SaveDialog show={this.state.modalShown === 'save'}
                             handleSave={this.handleSave.bind(this)}
                             handleClose={this.hideModals.bind(this)}/>
+
+                <LoadDialog show={this.state.modalShown === 'load'}
+                            handleClose={this.hideModals.bind(this)}
+                            savedStates={[]}
+                            handleLoad={(saved) => this.setStoredState(saved.selectedCards, 'selection')}/>
             </Container>
         );
-    }
-}
-
-type NavigationProps = {
-    expanded: boolean,
-    activeScreen: Screens,
-    toggle: (expanded: boolean) => void,
-    noCardsSelected: boolean,
-    share: () => void,
-    clean: () => void,
-    save: () => void,
-    setActiveScreen: (screen: Screens) => void
-}
-
-class Navigation extends React.Component<NavigationProps> {
-
-    private screenSelection(screenId: Screens, label: string, disabled: boolean = false) {
-        const activeScreen = this.props.activeScreen;
-
-        return <Nav.Link active={activeScreen === screenId}
-                         disabled={disabled}
-                         onClick={() => this.props.setActiveScreen(screenId)}>{label}</Nav.Link>;
-    }
-
-    render() {
-        return <Navbar collapseOnSelect
-                       bg="light"
-                       expand="sm"
-                       sticky="top"
-                       expanded={this.props.expanded}
-                       onToggle={this.props.toggle}>
-            <NavbarBrand>NVC</NavbarBrand>
-            <Nav>
-                {this.screenSelection('feelings', 'Pocity')}
-                {this.screenSelection('needs', 'Potřeby')}
-                {this.screenSelection('selection', 'Výběr', this.props.noCardsSelected)}
-            </Nav>
-            <Navbar.Toggle aria-controls={`offcanvasNavbar-expand`}/>
-            <Navbar.Offcanvas
-                id={`offcanvasNavbar-expand`}
-                aria-labelledby={`offcanvasNavbarLabel-expand`}
-                placement="end"
-            >
-                <Offcanvas.Header closeButton>
-                    <Offcanvas.Title id={`offcanvasNavbarLabel-expand`}>
-                        NVC Kartičky
-                    </Offcanvas.Title>
-                </Offcanvas.Header>
-                <Offcanvas.Body>
-                    <Nav className="justify-content-end flex-grow-1 pe-3">
-                        <Navbar.Toggle aria-controls="navbarSupportedContent"/>
-                        <Navbar.Collapse id="navbarSupportedContent">
-                            <Nav>
-                                <Nav.Link onClick={this.props.clean}
-                                          disabled={this.props.noCardsSelected}>Vymazat výběr</Nav.Link>
-                            </Nav>
-                            <Nav>
-                                <Nav.Link onClick={this.props.save}
-                                          disabled={this.props.noCardsSelected}>Uložit</Nav.Link>
-                            </Nav>
-                            <Nav>
-                                <Nav.Link onClick={this.props.share}
-                                          disabled={this.props.noCardsSelected}>Sdílet</Nav.Link>
-                            </Nav>
-                            <Nav>
-                                <Nav.Link href="https://lukas-krecan.github.io/nvc-cards-web/help.html"
-                                          target="_blank">Nápověda</Nav.Link>
-                            </Nav>
-                        </Navbar.Collapse>
-                    </Nav>
-                </Offcanvas.Body>
-            </Navbar.Offcanvas>
-        </Navbar>;
     }
 }
 

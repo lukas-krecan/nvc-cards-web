@@ -24,7 +24,7 @@ class SaveDialog extends React.Component<SaveDialogProps> {
                     </Modal.Header>
 
                     <Modal.Body>
-                        <input type="text" placeholder="Jméno" name="name"/>
+                        <input type="text" placeholder="Jméno" name="name" autoFocus={true} />
                     </Modal.Body>
 
                     <Modal.Footer>

@@ -25,6 +25,7 @@ class SaveDialog extends React.Component<SaveDialogProps> {
 
                     <Modal.Body>
                         <input type="text" placeholder="Jméno" name="name" autoFocus={true} />
+                        <p className="pt-2"><em className="small">Data jsou uložena u vás v prohlížeči, nejsou tedy nikde sdílena.</em></p>
                     </Modal.Body>
 
                     <Modal.Footer>

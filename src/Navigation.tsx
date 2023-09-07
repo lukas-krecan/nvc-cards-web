@@ -12,11 +12,10 @@ type NavigationProps = {
 
 class Navigation extends React.Component<NavigationProps> {
 
-    private screenSelection(screenId: Screens, label: string, disabled: boolean = false) {
+    private screenSelection(screenId: Screens, label: string) {
         const activeScreen = this.props.activeScreen;
 
         return <Nav.Link active={activeScreen === screenId}
-                         disabled={disabled}
                          className="tab"
                          onClick={() => this.props.setActiveScreen(screenId)}>
             {label}
@@ -34,7 +33,7 @@ class Navigation extends React.Component<NavigationProps> {
             <Nav>
                 {this.screenSelection('feelings', 'Pocity')}
                 {this.screenSelection('needs', 'Potřeby')}
-                {this.screenSelection('selection', 'Výběr', this.props.noCardsSelected)}
+                {this.screenSelection('selection', 'Výběr')}
             </Nav>
             <Navbar.Toggle aria-controls={`offcanvasNavbar-expand`}/>
             <Navbar.Offcanvas

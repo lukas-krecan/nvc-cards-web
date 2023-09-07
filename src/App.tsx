@@ -57,7 +57,7 @@ class App extends React.Component<
     }
 
     componentDidUpdate() {
-        this.saveState();
+        this.persistState();
     }
 
     private recoverState() {
@@ -81,7 +81,7 @@ class App extends React.Component<
         });
     }
 
-    private saveState() {
+    private persistState() {
         localStorage.setItem('@last', JSON.stringify({
             activeScreen: this.state.activeScreen,
             selectedCards: this.state.selectedCards,
@@ -129,7 +129,7 @@ class App extends React.Component<
             savedAt: new Date().toISOString()
         };
         localStorage.setItem('saved-' + new Date().toISOString(), JSON.stringify(stateToBeSaved));
-        this.setState({savedStates: loadSavedStates(), modalShown: null});
+        this.setState({savedStates: loadSavedStates(), modalShown: null, navBarExpanded: false});
     }
 
     private hideModals() {

@@ -9,6 +9,7 @@ import CardView from "./CardView";
 import {SavedState, Screens, StateToBeSaved} from "./types";
 import Navigation from "./Navigation";
 import LoadDialog from "./LoadDialog";
+import SelectionMenu from "./SelectionMenu";
 
 type NvcCardsAppProps = {};
 
@@ -146,12 +147,13 @@ class App extends React.Component<
                             activeScreen={this.state.activeScreen}
                             setActiveScreen={screen => this.setState({activeScreen: screen})}
                             noCardsSelected={noCardsSelected}
-                            hasSavedStates={this.state.savedStates.length > 0}
-                            clean={this.clean.bind(this)}
-                            share={() => this.showModal('share')}
-                            save={() => this.showModal('save')}
-                            load={() => this.showModal('load')}
                 />
+                {this.state.activeScreen === 'selection' && <SelectionMenu noCardsSelected={noCardsSelected}
+                               hasSavedStates={this.state.savedStates.length > 0}
+                               clean={this.clean.bind(this)}
+                               share={() => this.showModal('share')}
+                               save={() => this.showModal('save')}
+                               load={() => this.showModal('load')} /> }
 
                 <CardList cards={feelings} selectedCards={this.state.selectedCards}
                           onCardClick={this.selectCard.bind(this)} active={this.state.activeScreen === 'feelings'}/>

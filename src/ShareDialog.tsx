@@ -17,7 +17,7 @@ class ShareDialog extends React.Component<ShareDialogProps> {
             </Modal.Header>
             <Modal.Body>{this.concatSelectedCards(this.props.selectedCards)}</Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={this.copyToClipboard.bind(this)}>
+                <Button onClick={this.copyToClipboard.bind(this)}>
                     Zkopírovat do schránky
                 </Button>
             </Modal.Footer>

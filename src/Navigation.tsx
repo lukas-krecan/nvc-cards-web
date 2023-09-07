@@ -17,7 +17,10 @@ class Navigation extends React.Component<NavigationProps> {
 
         return <Nav.Link active={activeScreen === screenId}
                          disabled={disabled}
-                         onClick={() => this.props.setActiveScreen(screenId)}>{label}</Nav.Link>;
+                         className="tab"
+                         onClick={() => this.props.setActiveScreen(screenId)}>
+            {label}
+        </Nav.Link>;
     }
 
     render() {

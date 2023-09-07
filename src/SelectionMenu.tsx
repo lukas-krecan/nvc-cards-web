@@ -19,7 +19,6 @@ type SelectionMenuProps = {
 export default class SelectionMenu extends React.Component<SelectionMenuProps> {
     render() {
         return <Navbar bg="light"
-                       expand="sm"
                        sticky="top"
                        className="pt-0"
         >

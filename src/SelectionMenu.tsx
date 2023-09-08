@@ -24,10 +24,10 @@ export default class SelectionMenu extends React.Component<SelectionMenuProps> {
                        className="pt-0"
         >
 
-            <Icon onClick={this.props.clean} disabled={this.props.noCardsSelected} icon={faTrashCan} tooltip="Vymazat"/>
+            <Icon onClick={this.props.share} disabled={this.props.noCardsSelected} icon={faShareNodes} tooltip="Sdílet"/>
             <Icon onClick={this.props.load} disabled={!this.props.hasSavedStates} icon={faUpload} tooltip="Načíst"/>
             <Icon onClick={this.props.save} disabled={this.props.noCardsSelected} icon={faDownload} tooltip="Uložit"/>
-            <Icon onClick={this.props.share} disabled={this.props.noCardsSelected} icon={faShareNodes} tooltip="Sdílet"/>
+            <Icon onClick={this.props.clean} disabled={this.props.noCardsSelected} icon={faTrashCan} tooltip="Vymazat"/>
         </Navbar>
     }
 }

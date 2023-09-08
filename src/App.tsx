@@ -93,7 +93,7 @@ class App extends React.Component<
         localStorage.removeItem(saved.key);
         let savedStates = loadSavedStates();
         this.setState({savedStates: savedStates})
-        if (savedStates.length == 0) {
+        if (savedStates.length === 0) {
             this.setState({modalShown: null})
         }
     }

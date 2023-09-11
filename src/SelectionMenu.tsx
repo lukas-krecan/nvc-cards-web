@@ -42,7 +42,7 @@ type IconProps = {
 class Icon extends React.Component<IconProps> {
     render() {
         return <Nav>
-            <OverlayTrigger overlay={<Tooltip id={this.props.tooltip}>{this.props.tooltip}</Tooltip>} placement="top">
+            <OverlayTrigger overlay={<Tooltip id={this.props.tooltip}>{this.props.tooltip}</Tooltip>} placement="top" trigger="hover">
                 <Nav.Link onClick={this.props.onClick} className="pt-0"
                           disabled={this.props.disabled}><FontAwesomeIcon icon={this.props.icon} />
                 </Nav.Link>

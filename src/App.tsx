@@ -131,10 +131,6 @@ class App extends React.Component<
         this.setState({modalShown: modal});
     }
 
-    private save() {
-        this.setState({modalShown: 'save'});
-    }
-
     private handleSave(name: string) {
         const stateToBeSaved: StateToBeSaved = {
             selectedCards: this.state.selectedCards,
@@ -268,7 +264,7 @@ class SelectedCardList extends React.Component<SelectedCardListProps> {
     dragulaDecorator = (componentBackingInstance: HTMLElement) => {
         if (componentBackingInstance) {
             let options = {};
-            Dragula([componentBackingInstance], options).on('drop', el => {
+            Dragula([componentBackingInstance], options).on('drop', () => {
                 const ids = this.getChildrenIds(componentBackingInstance);
                 this.props.onSelectionChange(ids)
             })

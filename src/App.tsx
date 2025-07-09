@@ -158,15 +158,15 @@ class App extends React.Component<
                             activeScreen={this.state.activeScreen}
                             setActiveScreen={screen => this.setState({activeScreen: screen})}
                             noCardsSelected={noCardsSelected}
+                            language={this.props.language}
+                            setLanguage={this.props.setLanguage}
                 />
                 {this.state.activeScreen === 'selection' && <SelectionMenu noCardsSelected={noCardsSelected}
                                hasSavedStates={this.state.savedStates.length > 0}
                                clean={this.clean.bind(this)}
                                share={() => this.showModal('share')}
                                save={() => this.showModal('save')}
-                               load={() => this.showModal('load')}
-                               language={this.props.language}
-                               setLanguage={this.props.setLanguage} /> }
+                               load={() => this.showModal('load')} /> }
 
                 <CardList cards={this.props.feelings} selectedCards={this.state.selectedCards}
                           onCardClick={this.selectCard.bind(this)} active={this.state.activeScreen === 'feelings'}/>

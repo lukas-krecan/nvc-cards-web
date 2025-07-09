@@ -1,16 +1,28 @@
 import React from "react";
 import {Nav, Navbar, NavbarBrand, Offcanvas} from "react-bootstrap";
 import {Screens} from "./types";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faLanguage} from "@fortawesome/free-solid-svg-icons";
+import {Language} from "./LanguageContext";
 
 type NavigationProps = {
     expanded: boolean,
     activeScreen: Screens,
     toggle: (expanded: boolean) => void,
     noCardsSelected: boolean,
-    setActiveScreen: (screen: Screens) => void
+    setActiveScreen: (screen: Screens) => void,
+    language?: Language,
+    setLanguage?: (lang: Language) => void
 }
 
 class Navigation extends React.Component<NavigationProps> {
+    toggleLanguage = () => {
+        if (this.props.setLanguage && this.props.language) {
+            // Toggle between 'cs' and 'en'
+            const newLanguage = this.props.language === 'cs' ? 'en' : 'cs';
+            this.props.setLanguage(newLanguage);
+        }
+    }
 
     private screenSelection(screenId: Screens, label: string) {
         const activeScreen = this.props.activeScreen;
@@ -35,6 +47,17 @@ class Navigation extends React.Component<NavigationProps> {
                 {this.screenSelection('needs', 'Potřeby')}
                 {this.screenSelection('selection', 'Výběr')}
             </Nav>
+            {this.props.language && this.props.setLanguage && (
+                <Nav className="ms-auto">
+                    <Nav.Link 
+                        onClick={this.toggleLanguage}
+                        title={this.props.language === 'cs' ? 'Switch to English' : 'Přepnout do češtiny'}
+                    >
+                        <FontAwesomeIcon icon={faLanguage} />
+                        <span className="ms-1">{this.props.language.toUpperCase()}</span>
+                    </Nav.Link>
+                </Nav>
+            )}
             <Navbar.Toggle aria-controls={`offcanvasNavbar-expand`}/>
             <Navbar.Offcanvas
                 id={`offcanvasNavbar-expand`}

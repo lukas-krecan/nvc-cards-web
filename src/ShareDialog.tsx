@@ -1,24 +1,28 @@
 import React from "react";
 import {Button, Modal} from "react-bootstrap";
 import {CardInfo} from "./Data";
+import {Language} from "./LanguageContext";
+import {getTranslation} from "./translations";
 
 
 type ShareDialogProps = {
     selectedCards: CardInfo[];
     show: boolean;
     handleClose: () => void;
+    language: Language;
 };
 class ShareDialog extends React.Component<ShareDialogProps> {
     render() {
         const show = this.props.show;
+        let translations = getTranslation(this.props.language).dialogs.share;
         return <Modal show={show} onHide={this.props.handleClose}>
             <Modal.Header closeButton>
-                <Modal.Title>Vybrané kartičky</Modal.Title>
+                <Modal.Title>{translations.title}</Modal.Title>
             </Modal.Header>
             <Modal.Body>{this.concatSelectedCards(this.props.selectedCards)}</Modal.Body>
             <Modal.Footer>
                 <Button onClick={this.copyToClipboard.bind(this)}>
-                    Zkopírovat do schránky
+                    {translations.copyButton}
                 </Button>
             </Modal.Footer>
         </Modal>

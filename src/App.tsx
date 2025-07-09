@@ -11,6 +11,7 @@ import Navigation from "./Navigation";
 import LoadDialog from "./LoadDialog";
 import SelectionMenu from "./SelectionMenu";
 import { Language } from './LanguageContext';
+import { getTranslation } from './translations';
 
 type NvcCardsAppProps = {
     needs: CardInfo[];
@@ -166,7 +167,8 @@ class App extends React.Component<
                                clean={this.clean.bind(this)}
                                share={() => this.showModal('share')}
                                save={() => this.showModal('save')}
-                               load={() => this.showModal('load')} /> }
+                               load={() => this.showModal('load')}
+                               language={this.props.language} /> }
 
                 <CardList cards={this.props.feelings} selectedCards={this.state.selectedCards}
                           onCardClick={this.selectCard.bind(this)} active={this.state.activeScreen === 'feelings'}/>
@@ -177,20 +179,24 @@ class App extends React.Component<
                 <SelectedCardList cards={this.getSelectedCardsList()} selectedCards={this.state.selectedCards}
                                   onCardClick={this.selectCard.bind(this)}
                                   onSelectionChange={this.setNewSelection.bind(this)}
-                                  active={this.state.activeScreen === 'selection'}/>
+                                  active={this.state.activeScreen === 'selection'}
+                                  language={this.props.language}/>
 
                 <ShareDialog selectedCards={this.getSelectedCardsList()} show={this.state.modalShown === 'share'}
-                             handleClose={this.hideModals.bind(this)}/>
+                             handleClose={this.hideModals.bind(this)}
+                             language={this.props.language}/>
 
                 <SaveDialog show={this.state.modalShown === 'save'}
                             handleSave={this.handleSave.bind(this)}
-                            handleClose={this.hideModals.bind(this)}/>
+                            handleClose={this.hideModals.bind(this)}
+                            language={this.props.language}/>
 
                 <LoadDialog show={this.state.modalShown === 'load'}
                             handleClose={this.hideModals.bind(this)}
                             savedStates={this.state.savedStates}
                             handleLoad={(saved) => this.setStoredState(saved.selectedCards, 'selection')}
-                            handleDelete={(saved) => this.deleteSavedState(saved)}/>
+                            handleDelete={(saved) => this.deleteSavedState(saved)}
+                            language={this.props.language}/>
             </Container>
         );
     }
@@ -224,7 +230,8 @@ const CardList = (props: CardListProps) => {
 };
 
 type SelectedCardListProps = CardListProps & {
-    onSelectionChange: (ids: string[]) => void
+    onSelectionChange: (ids: string[]) => void;
+    language: Language;
 };
 
 function hideIf(cond: boolean) {
@@ -235,6 +242,7 @@ class SelectedCardList extends React.Component<SelectedCardListProps> {
 
     render() {
         const {cards, active} = this.props;
+        const translations = getTranslation(this.props.language);
 
         const isSelected = (card: CardInfo): boolean => {
             return this.props.selectedCards.indexOf(card.id) !== -1;
@@ -251,7 +259,7 @@ class SelectedCardList extends React.Component<SelectedCardListProps> {
                 </Row>
 
                 <Row className={"text-center text-lg-start" + hideIf(cards.length > 0)}>
-                    Nejsou vybrány žádné kartičky
+                    {translations.messages.noCardsSelected}
                 </Row>
             </Container>
         );

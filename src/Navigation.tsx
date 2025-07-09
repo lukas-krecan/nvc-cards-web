@@ -4,6 +4,7 @@ import {Screens} from "./types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faLanguage} from "@fortawesome/free-solid-svg-icons";
 import {Language} from "./LanguageContext";
+import {getTranslation} from "./translations";
 
 type NavigationProps = {
     expanded: boolean,
@@ -11,7 +12,7 @@ type NavigationProps = {
     toggle: (expanded: boolean) => void,
     noCardsSelected: boolean,
     setActiveScreen: (screen: Screens) => void,
-    language?: Language,
+    language: Language,
     setLanguage?: (lang: Language) => void
 }
 
@@ -35,17 +36,19 @@ class Navigation extends React.Component<NavigationProps> {
     }
 
     render() {
+        const translations = getTranslation(this.props.language).navigation;
+
         return <Navbar collapseOnSelect
-                       bg="light"
-                       expand="sm"
-                       sticky="top"
-                       expanded={this.props.expanded}
-                       onToggle={this.props.toggle}>
+                                                                 bg="light"
+                                                                 expand="sm"
+                                                                 sticky="top"
+                                                                 expanded={this.props.expanded}
+                                                                 onToggle={this.props.toggle}>
             <NavbarBrand>NVC</NavbarBrand>
             <Nav>
-                {this.screenSelection('feelings', 'Pocity')}
-                {this.screenSelection('needs', 'Potřeby')}
-                {this.screenSelection('selection', 'Výběr')}
+                {this.screenSelection('feelings', translations.feelings)}
+                {this.screenSelection('needs', translations.needs)}
+                {this.screenSelection('selection', translations.selection)}
             </Nav>
             {this.props.language && this.props.setLanguage && (
                 <Nav className="ms-auto">
@@ -66,7 +69,7 @@ class Navigation extends React.Component<NavigationProps> {
             >
                 <Offcanvas.Header closeButton>
                     <Offcanvas.Title id={`offcanvasNavbarLabel-expand`}>
-                        NVC Kartičky
+                        {translations.appTitle}
                     </Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body>
@@ -75,7 +78,7 @@ class Navigation extends React.Component<NavigationProps> {
                         <Navbar.Collapse id="navbarSupportedContent">
                             <Nav>
                                 <Nav.Link href="https://lukas-krecan.github.io/nvc-cards-web/help.html"
-                                          target="_blank">Nápověda</Nav.Link>
+                                          target="_blank">{translations.help}</Nav.Link>
                             </Nav>
                         </Navbar.Collapse>
                     </Nav>

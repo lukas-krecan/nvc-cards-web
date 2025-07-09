@@ -33,7 +33,7 @@ export const needs: Card[] = [
         data: [
             {text: 'Trust'},
             {text: 'Rely on someone', size: 2},
-            {text: 'be trusted'},
+            {text: 'be trusted', size: 2},
         ],
     },
     {
@@ -58,7 +58,7 @@ export const needs: Card[] = [
     {id: 'n13', data: [{text: 'Order'}, {text: 'cleanness'}]},
     {
         id: 'n14',
-        data: [{text: 'Appreciation, recognition'}, {text: 'be seen'}],
+        data: [{text: 'Appreciation'}, {text: 'recognition, to be seen'}],
     },
     {
         id: 'n15',
@@ -71,8 +71,7 @@ export const needs: Card[] = [
         id: 'n16',
         data: [
             {text: 'Be understood'},
-            {text: 'be heard', size: 2},
-            {text: 'empathy', size: 2},
+            {text: 'be heard, empathy', size: 2},
         ],
     },
     {id: 'n17', data: [{text: 'Movement'}]},
@@ -196,7 +195,7 @@ export const feelings: Card[] = [
     {id: 'f10', data: [{text: 'Pain'}, {text: 'Hurt', size: 2}]},
     {id: 'f11', data: [{text: 'Confusion'}]},
     {id: 'f12', data: [{text: 'Embarrassment'}, {text: 'Shame', size: 2}]},
-    {id: 'f13', data: [{text: 'Zahlcení'}]}, // TODO:
+    {id: 'f13', data: [{text: 'Overload'}]},
     {id: 'f14', data: [{text: 'Loneliness'}]},
     {id: 'f15', data: [{text: 'Irritation'}, {text: 'Frustration'}]},
     {id: 'f16', data: [{text: 'Nervousness'}]},
@@ -210,8 +209,8 @@ export const feelings: Card[] = [
         ],
     },
     {id: 'f19', data: [{text: 'Anxiety'}, {text: 'Worry, Hopelessness', size: 2}]},
-    {id: 'f20', data: [{text: 'Gratitude'}, {text: 'Naplnění', size: 2}]}, //todo:
-    {id: 'f21', data: [{text: 'Energy'}, {text: 'osvěžení', size: 2}]}, //todo:
+    {id: 'f20', data: [{text: 'Gratitude'}, {text: 'Fulfillment', size: 2}]},
+    {id: 'f21', data: [{text: 'Energy'}, {text: 'Stimulation', size: 2}]},
     {id: 'f22', data: [{text: 'Peace'}]},
     {id: 'f23', data: [{text: 'Freedom'}, {text: 'Light mood', size: 2}]},
     {id: 'f24', data: [{text: 'Surprise'}]},
@@ -231,17 +230,17 @@ export const feelings: Card[] = [
         id: 'f27',
         data: [{text: 'Serenity'}, {text: 'Self-confidence, composure', size: 2}],
     },
-    {id: 'f28', data: [{text: 'Tíživý pocit'}, {text: 'stísněnost', size: 2}]},
-    {id: 'f29', data: [{text: 'Zvědavost'}, {text: 'Zájem', size: 2}]},
-    {id: 'f30', data: [{text: 'Něha'}]},
-    {id: 'f31', data: [{text: 'Hrdost'}]},
-    {id: 'f32', data: [{text: 'Dobrá nálada'}, {text: 'Hřejivý pocit', size: 2}]},
-    {id: 'f33', data: [{text: 'Nadšení'}, {text: 'Vášeň', size: 2}]},
-    {id: 'f34', data: [{text: 'Znechucení'}]},
-    {id: 'f35', data: [{text: 'Pohoda'}, {text: 'Spokojenost'}]},
-    {id: 'f36', data: [{text: 'Povzbuzení'}, {text: 'Odhodlání'}]},
-    {id: 'f37', data: [{text: 'Pobavení'}, {text: 'Rozpustilost', size: 2}]},
-    {id: 'f38', data: [{text: 'Naděje'}]},
+    {id: 'f28', data: [{text: 'Heavy feeling'}, {text: 'Constriction, Burden', size: 2}]},
+    {id: 'f29', data: [{text: 'Curiosity'}, {text: 'Interest', size: 2}]},
+    {id: 'f30', data: [{text: 'Tenderness'}]},
+    {id: 'f31', data: [{text: 'Pride'}]},
+    {id: 'f32', data: [{text: 'Good mood'}, {text: 'Warm feeling', size: 2}]},
+    {id: 'f33', data: [{text: 'Enthusiasm'}, {text: 'Passion', size: 2}]},
+    {id: 'f34', data: [{text: 'Disgust'}]},
+    {id: 'f35', data: [{text: 'Comfort'}, {text: 'Contentment'}]},
+    {id: 'f36', data: [{text: 'Encouragement'}, {text: 'Determination'}]},
+    {id: 'f37', data: [{text: 'Amusement'}, {text: 'Playfulness', size: 2}]},
+    {id: 'f38', data: [{text: 'Hope'}]},
 ];
 
 export function findCard(id: string): Card {

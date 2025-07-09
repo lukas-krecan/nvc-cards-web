@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, useEffect, ReactNode } from 'react';
+import React, { createContext, useState, useContext, ReactNode } from 'react';
 
 // Define supported languages
 export type Language = 'cs' | 'en';
@@ -32,13 +32,24 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
     if (savedLanguage === 'cs' || savedLanguage === 'en') {
       return savedLanguage;
     }
-    
-    // Check browser language
-    const browserLang = navigator.language.toLowerCase();
-    if (browserLang.startsWith('cs')) {
-      return 'cs';
+
+    // Check if Czech is present in the browser's language preferences list
+    if (navigator.languages && navigator.languages.length > 0) {
+      // Check all browser languages for Czech
+      for (const lang of navigator.languages) {
+        if (lang.toLowerCase().startsWith('cs')) {
+          return 'cs';
+        }
+      }
+    } else {
+      // Fallback to primary language if languages array is not available
+      const browserLang = navigator.language.toLowerCase();
+      if (browserLang.startsWith('cs')) {
+        return 'cs';
+      }
     }
-    return 'en'; // Default to English for all other languages
+
+    return 'en'; // Default to English if Czech is not found
   };
 
   const [language, setLanguageState] = useState<Language>(getBrowserLanguage());

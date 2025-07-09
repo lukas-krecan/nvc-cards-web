@@ -246,8 +246,8 @@ export const feelings: Card[] = [
 
 export function findCard(id: string): Card {
     if (id.startsWith('n')) {
-        return needs.find(c => c.id == id) || {id: id, data: []};
+        return needs.find(c => c.id === id) || {id: id, data: []};
     } else {
-        return feelings.find(c => c.id == id) || {id: id, data: []};
+        return feelings.find(c => c.id === id) || {id: id, data: []};
     }
 }

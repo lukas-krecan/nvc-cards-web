@@ -72,7 +72,7 @@ class Navigation extends React.Component<NavigationProps> {
                                     <FontAwesomeIcon icon={faLanguage} />
                                     <span className="ms-1">{this.props.language.toUpperCase()}</span>
                                 </Nav.Link>
-                                <Nav.Link href="https://lukas-krecan.github.io/nvc-cards-web/help.html"
+                                <Nav.Link href={`https://lukas-krecan.github.io/nvc-cards-web/help${this.props.language === 'en' ? '_en' : ''}.html`}
                                           target="_blank">{translations.help}</Nav.Link>
                             </Nav>
                         </Navbar.Collapse>

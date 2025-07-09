@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import {CardInfo, feelings, findCard, needs} from './Data';
+import {CardInfo} from './Data';
 import {Container, Row} from "react-bootstrap";
 import Dragula from "react-dragula";
 import SaveDialog from "./SaveDialog";
@@ -10,8 +10,16 @@ import {SavedState, Screens, StateToBeSaved} from "./types";
 import Navigation from "./Navigation";
 import LoadDialog from "./LoadDialog";
 import SelectionMenu from "./SelectionMenu";
+import { Language } from './LanguageContext';
+import { getTranslation } from './translations';
 
-type NvcCardsAppProps = {};
+type NvcCardsAppProps = {
+    needs: CardInfo[];
+    feelings: CardInfo[];
+    findCard: (id: string) => CardInfo;
+    language: Language;
+    setLanguage: (lang: Language) => void;
+};
 
 type Modals = 'share' | 'save' | 'load'
 
@@ -99,7 +107,7 @@ class App extends React.Component<
     }
 
     private getSelectedCardsList() {
-        return this.state.selectedCards.map((id) => findCard(id));
+        return this.state.selectedCards.map((id) => this.props.findCard(id));
     }
 
     private selectCard(item: CardInfo) {
@@ -121,10 +129,6 @@ class App extends React.Component<
 
     private showModal(modal: Modals) {
         this.setState({modalShown: modal});
-    }
-
-    private save() {
-        this.setState({modalShown: 'save'});
     }
 
     private handleSave(name: string) {
@@ -151,37 +155,44 @@ class App extends React.Component<
                             activeScreen={this.state.activeScreen}
                             setActiveScreen={screen => this.setState({activeScreen: screen})}
                             noCardsSelected={noCardsSelected}
+                            language={this.props.language}
+                            setLanguage={this.props.setLanguage}
                 />
                 {this.state.activeScreen === 'selection' && <SelectionMenu noCardsSelected={noCardsSelected}
                                hasSavedStates={this.state.savedStates.length > 0}
                                clean={this.clean.bind(this)}
                                share={() => this.showModal('share')}
                                save={() => this.showModal('save')}
-                               load={() => this.showModal('load')} /> }
+                               load={() => this.showModal('load')}
+                               language={this.props.language} /> }
 
-                <CardList cards={feelings} selectedCards={this.state.selectedCards}
+                <CardList cards={this.props.feelings} selectedCards={this.state.selectedCards}
                           onCardClick={this.selectCard.bind(this)} active={this.state.activeScreen === 'feelings'}/>
 
-                <CardList cards={needs} selectedCards={this.state.selectedCards}
+                <CardList cards={this.props.needs} selectedCards={this.state.selectedCards}
                           onCardClick={this.selectCard.bind(this)} active={this.state.activeScreen === 'needs'}/>
 
                 <SelectedCardList cards={this.getSelectedCardsList()} selectedCards={this.state.selectedCards}
                                   onCardClick={this.selectCard.bind(this)}
                                   onSelectionChange={this.setNewSelection.bind(this)}
-                                  active={this.state.activeScreen === 'selection'}/>
+                                  active={this.state.activeScreen === 'selection'}
+                                  language={this.props.language}/>
 
                 <ShareDialog selectedCards={this.getSelectedCardsList()} show={this.state.modalShown === 'share'}
-                             handleClose={this.hideModals.bind(this)}/>
+                             handleClose={this.hideModals.bind(this)}
+                             language={this.props.language}/>
 
                 <SaveDialog show={this.state.modalShown === 'save'}
                             handleSave={this.handleSave.bind(this)}
-                            handleClose={this.hideModals.bind(this)}/>
+                            handleClose={this.hideModals.bind(this)}
+                            language={this.props.language}/>
 
                 <LoadDialog show={this.state.modalShown === 'load'}
                             handleClose={this.hideModals.bind(this)}
                             savedStates={this.state.savedStates}
                             handleLoad={(saved) => this.setStoredState(saved.selectedCards, 'selection')}
-                            handleDelete={(saved) => this.deleteSavedState(saved)}/>
+                            handleDelete={(saved) => this.deleteSavedState(saved)}
+                            language={this.props.language}/>
             </Container>
         );
     }
@@ -215,7 +226,8 @@ const CardList = (props: CardListProps) => {
 };
 
 type SelectedCardListProps = CardListProps & {
-    onSelectionChange: (ids: string[]) => void
+    onSelectionChange: (ids: string[]) => void;
+    language: Language;
 };
 
 function hideIf(cond: boolean) {
@@ -226,6 +238,7 @@ class SelectedCardList extends React.Component<SelectedCardListProps> {
 
     render() {
         const {cards, active} = this.props;
+        const translations = getTranslation(this.props.language);
 
         const isSelected = (card: CardInfo): boolean => {
             return this.props.selectedCards.indexOf(card.id) !== -1;
@@ -242,7 +255,7 @@ class SelectedCardList extends React.Component<SelectedCardListProps> {
                 </Row>
 
                 <Row className={"text-center text-lg-start" + hideIf(cards.length > 0)}>
-                    Nejsou vybrány žádné kartičky
+                    {translations.messages.noCardsSelected}
                 </Row>
             </Container>
         );
@@ -251,7 +264,7 @@ class SelectedCardList extends React.Component<SelectedCardListProps> {
     dragulaDecorator = (componentBackingInstance: HTMLElement) => {
         if (componentBackingInstance) {
             let options = {};
-            Dragula([componentBackingInstance], options).on('drop', el => {
+            Dragula([componentBackingInstance], options).on('drop', () => {
                 const ids = this.getChildrenIds(componentBackingInstance);
                 this.props.onSelectionChange(ids)
             })

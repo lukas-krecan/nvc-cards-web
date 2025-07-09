@@ -13,16 +13,15 @@ type NavigationProps = {
     noCardsSelected: boolean,
     setActiveScreen: (screen: Screens) => void,
     language: Language,
-    setLanguage?: (lang: Language) => void
+    setLanguage: (lang: Language) => void
 }
 
 class Navigation extends React.Component<NavigationProps> {
     toggleLanguage = () => {
-        if (this.props.setLanguage && this.props.language) {
-            // Toggle between 'cs' and 'en'
-            const newLanguage = this.props.language === 'cs' ? 'en' : 'cs';
-            this.props.setLanguage(newLanguage);
-        }
+        // Toggle between 'cs' and 'en'
+        const newLanguage = this.props.language === 'cs' ? 'en' : 'cs';
+        this.props.setLanguage(newLanguage);
+
     }
 
     private screenSelection(screenId: Screens, label: string) {
@@ -50,17 +49,6 @@ class Navigation extends React.Component<NavigationProps> {
                 {this.screenSelection('needs', translations.needs)}
                 {this.screenSelection('selection', translations.selection)}
             </Nav>
-            {this.props.language && this.props.setLanguage && (
-                <Nav className="ms-auto">
-                    <Nav.Link 
-                        onClick={this.toggleLanguage}
-                        title={this.props.language === 'cs' ? 'Switch to English' : 'Přepnout do češtiny'}
-                    >
-                        <FontAwesomeIcon icon={faLanguage} />
-                        <span className="ms-1">{this.props.language.toUpperCase()}</span>
-                    </Nav.Link>
-                </Nav>
-            )}
             <Navbar.Toggle aria-controls={`offcanvasNavbar-expand`}/>
             <Navbar.Offcanvas
                 id={`offcanvasNavbar-expand`}
@@ -77,6 +65,13 @@ class Navigation extends React.Component<NavigationProps> {
                         <Navbar.Toggle aria-controls="navbarSupportedContent"/>
                         <Navbar.Collapse id="navbarSupportedContent">
                             <Nav>
+                                <Nav.Link
+                                    onClick={this.toggleLanguage}
+                                    title={this.props.language === 'cs' ? 'Switch to English' : 'Přepnout do češtiny'}
+                                >
+                                    <FontAwesomeIcon icon={faLanguage} />
+                                    <span className="ms-1">{this.props.language.toUpperCase()}</span>
+                                </Nav.Link>
                                 <Nav.Link href="https://lukas-krecan.github.io/nvc-cards-web/help.html"
                                           target="_blank">{translations.help}</Nav.Link>
                             </Nav>

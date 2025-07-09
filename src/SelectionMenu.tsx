@@ -1,4 +1,4 @@
-import {Nav, Navbar} from "react-bootstrap";
+import {Nav, Navbar, OverlayTrigger, Tooltip} from "react-bootstrap";
 import React from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTrashCan} from '@fortawesome/free-regular-svg-icons'
@@ -44,9 +44,14 @@ type IconProps = {
 class Icon extends React.Component<IconProps> {
     render() {
         return <Nav>
+            <OverlayTrigger
+                placement="bottom"
+                overlay={<Tooltip id={`tooltip-${this.props.tooltip}`}>{this.props.tooltip}</Tooltip>}
+            >
                 <Nav.Link onClick={this.props.onClick} className="pt-0"
                           disabled={this.props.disabled}><FontAwesomeIcon icon={this.props.icon} />
                 </Nav.Link>
+            </OverlayTrigger>
         </Nav>
     }
 }

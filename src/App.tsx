@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import {CardInfo, feelings, findCard, needs} from './Data';
+import {CardInfo} from './Data';
 import {Container, Row} from "react-bootstrap";
 import Dragula from "react-dragula";
 import SaveDialog from "./SaveDialog";
@@ -10,8 +10,15 @@ import {SavedState, Screens, StateToBeSaved} from "./types";
 import Navigation from "./Navigation";
 import LoadDialog from "./LoadDialog";
 import SelectionMenu from "./SelectionMenu";
+import { Language } from './LanguageContext';
 
-type NvcCardsAppProps = {};
+type NvcCardsAppProps = {
+    needs: CardInfo[];
+    feelings: CardInfo[];
+    findCard: (id: string) => CardInfo;
+    language: Language;
+    setLanguage: (lang: Language) => void;
+};
 
 type Modals = 'share' | 'save' | 'load'
 
@@ -99,7 +106,7 @@ class App extends React.Component<
     }
 
     private getSelectedCardsList() {
-        return this.state.selectedCards.map((id) => findCard(id));
+        return this.state.selectedCards.map((id) => this.props.findCard(id));
     }
 
     private selectCard(item: CardInfo) {
@@ -157,12 +164,14 @@ class App extends React.Component<
                                clean={this.clean.bind(this)}
                                share={() => this.showModal('share')}
                                save={() => this.showModal('save')}
-                               load={() => this.showModal('load')} /> }
+                               load={() => this.showModal('load')}
+                               language={this.props.language}
+                               setLanguage={this.props.setLanguage} /> }
 
-                <CardList cards={feelings} selectedCards={this.state.selectedCards}
+                <CardList cards={this.props.feelings} selectedCards={this.state.selectedCards}
                           onCardClick={this.selectCard.bind(this)} active={this.state.activeScreen === 'feelings'}/>
 
-                <CardList cards={needs} selectedCards={this.state.selectedCards}
+                <CardList cards={this.props.needs} selectedCards={this.state.selectedCards}
                           onCardClick={this.selectCard.bind(this)} active={this.state.activeScreen === 'needs'}/>
 
                 <SelectedCardList cards={this.getSelectedCardsList()} selectedCards={this.state.selectedCards}

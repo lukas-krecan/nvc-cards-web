@@ -1,4 +1,4 @@
-export type Card = {
+export type CardInfo = {
     id: string;
     data: CardData[];
 };
@@ -8,14 +8,15 @@ export type CardData = {
     size?: number;
 };
 
-export const needs: Card[] = [
+export const needs: CardInfo[] = [
     {id: 'n1', data: [{text: 'Security, Safety'}, {text: 'Stability'}]},
     {id: 'n2', data: [{text: 'Touch'}, {text: 'display of affection'}]},
     {
         id: 'n3',
         data: [
             {text: 'Integrity'},
-            {text: 'I do what I say I do'}, // FIXME:
+            {text: 'harmony between what I say'},
+            {text: 'and what I do', size: 3},
         ],
     },
     {
@@ -152,7 +153,7 @@ export const needs: Card[] = [
     {id: 'n38', data: [{text: 'Pleasure'}, {text: 'delight'}]},
     {
         id: 'n39',
-        data: [{text: 'Intimacy'}, {text: 'closeness, depth of shared experiencé'}],
+        data: [{text: 'Intimacy'}, {text: 'closeness, depth of shared experience'}],
     },
     {id: 'n40', data: [{text: 'Play'}, {text: 'joy, competition'}]},
     {
@@ -179,7 +180,7 @@ export const needs: Card[] = [
     {id: 'n45', data: [{text: 'Creativity'}, {text: 'Self-expression'}]},
 ];
 
-export const feelings: Card[] = [
+export const feelings: CardInfo[] = [
     {id: 'f1', data: [{text: 'Anger, Rage'}]},
     {id: 'f2', data: [{text: 'Impatience'}]},
     {id: 'f3', data: [{text: 'Sadness'}]},
@@ -197,7 +198,7 @@ export const feelings: Card[] = [
     {id: 'f12', data: [{text: 'Embarrassment'}, {text: 'Shame', size: 2}]},
     {id: 'f13', data: [{text: 'Overload'}]},
     {id: 'f14', data: [{text: 'Loneliness'}]},
-    {id: 'f15', data: [{text: 'Irritation'}, {text: 'Frustration'}]},
+    {id: 'f15', data: [{text: 'Grumpiness'}, {text: 'Frustration'}]},
     {id: 'f16', data: [{text: 'Nervousness'}]},
     {id: 'f39', data: [{text: 'Boredom'}]},
     {id: 'f17', data: [{text: 'Bitterness'}]},
@@ -243,7 +244,7 @@ export const feelings: Card[] = [
     {id: 'f38', data: [{text: 'Hope'}]},
 ];
 
-export function findCard(id: string): Card {
+export function findCard(id: string): CardInfo {
     if (id.startsWith('n')) {
         return needs.find(c => c.id === id) || {id: id, data: []};
     } else {

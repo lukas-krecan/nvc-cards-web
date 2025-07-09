@@ -50,7 +50,7 @@ export const needs: CardInfo[] = [
         id: 'n10',
         data: [
             {text: 'Autonomy'},
-            {text: 'Independence'},
+            {text: 'Independence', size: 2},
             {text: 'Influence on things that concern me, choice'},
         ],
     },

@@ -240,49 +240,6 @@ th, td {
     padding: 0 1rem;
 }
 
-/* Button enhancements */
-.btn {
-    border-radius: 12px;
-    font-weight: 500;
-    padding: 0.75rem 1.5rem;
-    transition: all 0.3s ease;
-    border: none;
-    text-transform: none;
-    letter-spacing: 0.025em;
-}
-
-.btn-primary {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-}
-
-.btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
-    background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
-}
-
-.btn-secondary {
-    background: linear-gradient(135deg, #a8a8a8 0%, #8c8c8c 100%);
-    box-shadow: 0 4px 15px rgba(168, 168, 168, 0.3);
-}
-
-.btn-secondary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(168, 168, 168, 0.4);
-}
-
-.btn-outline-secondary {
-    border: 2px solid #e2e8f0;
-    color: #4a5568;
-    background: transparent;
-}
-
-.btn-outline-secondary:hover {
-    background: #f7fafc;
-    border-color: #cbd5e0;
-    transform: translateY(-2px);
-}
 
 /* Form enhancements */
 .form-control {

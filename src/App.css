@@ -190,6 +190,15 @@ th, td {
     transform: none !important;
 }
 
+.navbar-toggler {
+    border: none !important;
+    padding: 0.25rem 0.5rem;
+}
+
+.navbar-toggler:focus {
+    box-shadow: none !important;
+}
+
 @media (min-width: 375px) {
     .navbar-expand-sm .navbar-nav {
         flex-direction: row;

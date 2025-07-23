@@ -6,13 +6,14 @@
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
     margin-bottom: 10px;
-    margin-left: 5px;
-    margin-right: 5px;
+    margin-left: 8px;
+    margin-right: 8px;
     background: rgba(255, 255, 255, 0.4);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.3);
     position: relative;
     z-index: 1;
+    width: calc(25% - 16px);
 }
 
 .card:hover {
@@ -282,8 +283,15 @@ th, td {
 }
 
 /* Responsive improvements */
-@media (max-width: 768px) {
+@media (max-width: 991px) {
     .card {
+        width: calc(33.333% - 16px);
+    }
+}
+
+@media (max-width: 767px) {
+    .card {
+        width: calc(50% - 16px);
         margin-bottom: 1rem;
     }
     
@@ -293,6 +301,12 @@ th, td {
     
     .navbar-brand {
         font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 575px) {
+    .card {
+        width: calc(100% - 16px);
     }
 }
 

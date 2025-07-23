@@ -176,6 +176,20 @@ th, td {
     transform: translateY(-2px);
 }
 
+.nav-link:disabled,
+.nav-link.disabled {
+    color: #9ca3af !important;
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.nav-link:disabled:hover,
+.nav-link.disabled:hover {
+    background: none !important;
+    color: #9ca3af !important;
+    transform: none !important;
+}
+
 @media (min-width: 375px) {
     .navbar-expand-sm .navbar-nav {
         flex-direction: row;

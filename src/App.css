@@ -1,6 +1,5 @@
 .card {
     min-height: 120px;
-    border: none;
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
@@ -28,14 +27,14 @@
 
 .text1 {
     font-size: 1.25rem;
-    font-weight: 600;
+    font-weight: 500;
     line-height: 1.4;
-    color: #2d3748;
+    color: #4a5568;
 }
 
 .text2 {
     font-size: 1.1rem;
-    font-weight: 500;
+    font-weight: 400;
     line-height: 1.4;
     color: #4a5568;
 }
@@ -44,7 +43,7 @@
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.4;
-    color: #718096;
+    color: #4a5568;
 }
 
 .selectedNeed {
@@ -194,7 +193,6 @@ th, td {
     backdrop-filter: blur(15px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08) !important;
-    margin-bottom: 1rem;
 }
 
 @media (min-width: 375px) {

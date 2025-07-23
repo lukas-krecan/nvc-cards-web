@@ -269,13 +269,12 @@ th, td {
     .navbar-brand {
         font-size: 1.2rem;
         margin-left: 0.5rem;
-        margin-right: 0.25rem;
+        margin-right: 0.2rem;
     }
 
     .nav-link {
         padding: 0.4rem 0.5rem !important;
         margin: 0 0.05rem;
-        font-size: 0.8rem;
     }
 }
 

@@ -163,8 +163,16 @@ th, td {
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     padding: 0.5rem 0;
     z-index: 1030;
-    position: relative;
-    margin-bottom: 1rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+}
+
+/* Add top padding to body to account for fixed navbar */
+body {
+    padding-top: 70px;
 }
 
 .navbar-brand {
@@ -278,10 +286,10 @@ th, td {
     }
     
     .navbar {
-        margin-left: -15px;
-        margin-right: -15px;
-        padding-left: 15px;
-        padding-right: 15px;
+        margin-left: 0;
+        margin-right: 0;
+        padding-left: 1rem;
+        padding-right: 1rem;
         border-radius: 0;
     }
     

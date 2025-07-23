@@ -112,6 +112,28 @@ th, td {
 .modal-body {
     max-height: 90vh;
     padding: 2rem;
+    overflow: visible;
+}
+
+/* Load dialog specific styling */
+.modal-body table {
+    display: block;
+    max-height: 60vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.modal-body thead,
+.modal-body tbody {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.modal-body tbody {
+    width: calc(100% - 15px);
 }
 
 .modal-header {

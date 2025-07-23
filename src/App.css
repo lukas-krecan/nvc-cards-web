@@ -1,24 +1,24 @@
 .card {
     min-height: 120px;
     border: none;
-    border-radius: 16px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
     cursor: pointer;
     margin-bottom: 10px;
     margin-left: 8px;
     margin-right: 8px;
-    background: rgba(255, 255, 255, 0.4);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: #ffffff;
+    border: 1px solid #e8e8e8;
     position: relative;
     z-index: 1;
     width: calc(25% - 16px);
 }
 
 .card:hover {
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
-    background: rgba(255, 255, 255, 0.55);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.08);
+    border-color: #d0d0d0;
+    transform: translateY(-1px);
 }
 
 .card-body {
@@ -48,29 +48,29 @@
 }
 
 .selectedNeed {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-    color: white !important;
-    border-color: transparent !important;
-    box-shadow: 0 12px 30px rgba(102, 126, 234, 0.4) !important;
+    background: #e8f4f8 !important;
+    color: #2d5a6b !important;
+    border-color: #7cc5d9 !important;
+    box-shadow: 0 3px 12px rgba(124, 197, 217, 0.3), 0 2px 6px rgba(124, 197, 217, 0.15) !important;
 }
 
 .selectedNeed .text1,
 .selectedNeed .text2,
 .selectedNeed .text3 {
-    color: white !important;
+    color: #2d5a6b !important;
 }
 
 .selectedFeeling {
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%) !important;
-    color: white !important;
-    border-color: transparent !important;
-    box-shadow: 0 12px 30px rgba(240, 147, 251, 0.4) !important;
+    background: #fdf2e8 !important;
+    color: #8b4513 !important;
+    border-color: #e6a573 !important;
+    box-shadow: 0 3px 12px rgba(230, 165, 115, 0.3), 0 2px 6px rgba(230, 165, 115, 0.15) !important;
 }
 
 .selectedFeeling .text1,
 .selectedFeeling .text2,
 .selectedFeeling .text3 {
-    color: white !important;
+    color: #8b4513 !important;
 }
 
 .hidden {

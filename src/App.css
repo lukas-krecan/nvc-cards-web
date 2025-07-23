@@ -1,33 +1,86 @@
 .card {
-    min-height: 100px;
+    min-height: 120px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    margin-bottom: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+    background: #ffffff;
+    border: 1px solid #e8e8e8;
+    width: calc(25% - 10px);
+}
+
+.card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.08);
+    border-color: #d0d0d0;
+    transform: translateY(-1px);
+}
+
+.card-body {
+    padding: 1.5rem;
+    border-radius: 16px;
 }
 
 .text1 {
-    font-size: 120%;
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 1.4;
+    color: #4a5568;
 }
 
 .text2 {
-    font-size: 100%;
+    font-size: 1.1rem;
+    font-weight: 400;
+    line-height: 1.4;
+    color: #4a5568;
 }
 
 .text3 {
-    font-size: 90%;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.4;
+    color: #4a5568;
 }
+
 .selectedNeed {
-    background-color: #d4ebf2 !important;
+    background: #e8f4f8 !important;
+    color: #2d5a6b !important;
+    border-color: #7cc5d9 !important;
+    box-shadow: 0 3px 12px rgba(124, 197, 217, 0.3), 0 2px 6px rgba(124, 197, 217, 0.15) !important;
 }
+
+.selectedNeed .text1,
+.selectedNeed .text2,
+.selectedNeed .text3 {
+    color: #2d5a6b !important;
+}
+
 .selectedFeeling {
-    background-color: #f2dbd4 !important;
+    background: #fdf2e8 !important;
+    color: #8b4513 !important;
+    border-color: #e6a573 !important;
+    box-shadow: 0 3px 12px rgba(230, 165, 115, 0.3), 0 2px 6px rgba(230, 165, 115, 0.15) !important;
 }
+
+.selectedFeeling .text1,
+.selectedFeeling .text2,
+.selectedFeeling .text3 {
+    color: #8b4513 !important;
+}
+
 .hidden {
     display: none !important;
 }
+
 .nav-link.active {
-    font-weight: 500;
+    font-weight: 600;
+    color: #667eea !important;
 }
 
 .tab.active {
-    border-bottom: 2px solid !important;
+    border-bottom: 3px solid #667eea !important;
     border-radius: 0 !important;
 }
 
@@ -45,19 +98,107 @@ th, td {
 .modal-content {
     max-height: 95vh;
     overflow: auto;
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.95);
 }
 
 /*Sets the maximum height of the modal body to 90% of the screen height*/
 .modal-body {
     max-height: 90vh;
+    padding: 2rem;
+    overflow: visible;
 }
+
+/* Load dialog specific styling */
+.modal-body table {
+    display: block;
+    max-height: 60vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.modal-body thead,
+.modal-body tbody {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.modal-body tbody {
+    width: calc(100% - 15px);
+}
+
+.modal-header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 1.5rem 2rem 1rem;
+    border-radius: 20px 20px 0 0;
+}
+
+.modal-footer {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 1rem 2rem 1.5rem;
+    border-radius: 0 0 20px 20px;
+}
+
 /*Sets the maximum height of the modal image to 69% of the screen height*/
 .modal-body img {
     max-height: 69vh;
+    border-radius: 12px;
 }
 
 
 /* Navbar */
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: #667eea !important;
+    text-shadow: 0 2px 4px rgba(102, 126, 234, 0.2);
+    margin-left: 1rem;
+}
+
+.nav-link {
+    font-weight: 500;
+    color: #4a5568 !important;
+    padding: 0.75rem 1.25rem !important;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    margin: 0 0.25rem;
+}
+
+.nav-link:hover {
+    background: rgba(102, 126, 234, 0.1);
+    color: #667eea !important;
+    transform: translateY(-2px);
+}
+
+.nav-link:disabled,
+.nav-link.disabled {
+    color: #9ca3af !important;
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.nav-link:disabled:hover,
+.nav-link.disabled:hover {
+    background: none !important;
+    color: #9ca3af !important;
+    transform: none !important;
+}
+
+.navbar-toggler {
+    border: none !important;
+    padding: 0.25rem 0.5rem;
+}
+
+.navbar-toggler:focus {
+    box-shadow: none !important;
+}
+
 @media (min-width: 375px) {
     .navbar-expand-sm .navbar-nav {
         flex-direction: row;
@@ -93,5 +234,80 @@ th, td {
     opacity: 0.2;
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
     filter: alpha(opacity=20);
+}
+
+/* Add margin to card containers only */
+.cards {
+    margin-top: 0.5rem;
+}
+
+/* Form enhancements */
+.form-control {
+    border-radius: 12px;
+    border: 2px solid #e2e8f0;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Row spacing */
+.row {
+    margin-bottom: 2rem;
+}
+
+/* Responsive improvements */
+@media (max-width: 991px) {
+    .card {
+        width: calc(33.333% - 10px);
+    }
+}
+
+@media (max-width: 767px) {
+    .card {
+        width: calc(50% - 6px);
+        margin-bottom: 0.5rem;
+        margin-left: 3px;
+        margin-right: 3px;
+    }
+
+    .navbar-brand {
+        font-size: 1.2rem;
+        margin-left: 0.5rem;
+        margin-right: 0.2rem;
+    }
+
+    .nav-link {
+        padding: 0.4rem 0.5rem !important;
+        margin: 0 0.05rem;
+    }
+}
+
+@media (max-width: 575px) {
+    .card {
+        width: calc(100% - 6px);
+        margin-left: 3px;
+        margin-right: 3px;
+    }
+}
+
+/* Animation for page transitions */
+.container > .row {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 

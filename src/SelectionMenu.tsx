@@ -23,8 +23,7 @@ export default class SelectionMenu extends React.Component<SelectionMenuProps> {
 
         return <Navbar bg="light"
                                                      expand="sm"
-                                                     sticky="top"
-                                                     className="pt-0"
+                                                     className="pt-0 selection-menu"
         >
             <Icon onClick={this.props.share} disabled={this.props.noCardsSelected} icon={faShareNodes} tooltip={translations.share}/>
             <Icon onClick={this.props.load} disabled={!this.props.hasSavedStates} icon={faUpload} tooltip={translations.load}/>

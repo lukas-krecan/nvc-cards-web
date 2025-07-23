@@ -12,7 +12,7 @@ export const needs: CardInfo[] = [
     {"id":"n1", data:[{text:'Jistota, Bezpečí'}, {text:'Stabilita'}]},
     {"id":"n2", data:[{text:'Dotek'}, {text:'projevení náklonnosti'}]},
     {"id":"n3", data:[{text:'Integrita'}, {text:'soulad mezi tím co říkám,'}, {text:'a co dělám', size: 3}]},
-    {"id":"n4", data:[{text:'Klid'}, {text:'možnost dělat věci svým tempem'}, {text:'Klid v duši', size: 3}]},
+    {"id":"n4", data:[{text:'Klid'}, {text:'možnost dělat věci svým tempem, klid v duši', size: 3}]},
     {"id":"n5", data:[{text:'Láska'}]},
     {"id":"n6", data:[{text:'Dobrodružství'}, {text:'Výzva'}]},
     {"id":"n7", data:[{text:'Důvěra'}, {text:'Důvěřovat, spolehnout se', size: 2}, {text:'mít něčí důvěru'}]},

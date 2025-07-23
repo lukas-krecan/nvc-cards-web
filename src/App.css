@@ -241,17 +241,10 @@ th, td {
     transition: all 0.3s ease;
 }
 
-/* Container enhancements */
-.container {
-    max-width: 1200px;
-    padding: 0 1rem;
-}
-
 /* Add margin to card containers only */
-.container:not(.navbar .container) {
-    margin-top: 1.5rem;
+.cards {
+    margin-top: 0.5rem;
 }
-
 
 /* Form enhancements */
 .form-control {

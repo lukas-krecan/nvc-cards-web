@@ -166,17 +166,20 @@ class App extends React.Component<
                                load={() => this.showModal('load')}
                                language={this.props.language} /> }
 
-                <CardList cards={this.props.feelings} selectedCards={this.state.selectedCards}
-                          onCardClick={this.selectCard.bind(this)} active={this.state.activeScreen === 'feelings'}/>
+                <Container className="cards">
+                    <CardList cards={this.props.feelings} selectedCards={this.state.selectedCards}
+                              onCardClick={this.selectCard.bind(this)} active={this.state.activeScreen === 'feelings'}/>
 
-                <CardList cards={this.props.needs} selectedCards={this.state.selectedCards}
-                          onCardClick={this.selectCard.bind(this)} active={this.state.activeScreen === 'needs'}/>
+                    <CardList cards={this.props.needs} selectedCards={this.state.selectedCards}
+                              onCardClick={this.selectCard.bind(this)} active={this.state.activeScreen === 'needs'}/>
 
-                <SelectedCardList cards={this.getSelectedCardsList()} selectedCards={this.state.selectedCards}
-                                  onCardClick={this.selectCard.bind(this)}
-                                  onSelectionChange={this.setNewSelection.bind(this)}
-                                  active={this.state.activeScreen === 'selection'}
-                                  language={this.props.language}/>
+                    <SelectedCardList cards={this.getSelectedCardsList()} selectedCards={this.state.selectedCards}
+                                      onCardClick={this.selectCard.bind(this)}
+                                      onSelectionChange={this.setNewSelection.bind(this)}
+                                      active={this.state.activeScreen === 'selection'}
+                                      language={this.props.language}/>
+
+                </Container>
 
                 <ShareDialog selectedCards={this.getSelectedCardsList()} show={this.state.modalShown === 'share'}
                              handleClose={this.hideModals.bind(this)}

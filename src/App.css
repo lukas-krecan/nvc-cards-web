@@ -161,18 +161,6 @@ th, td {
     backdrop-filter: blur(15px);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 0.5rem 0;
-    z-index: 1030;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-}
-
-/* Add top padding to body to account for fixed navbar */
-body {
-    padding-top: 70px;
 }
 
 .navbar-brand {
@@ -196,6 +184,17 @@ body {
     background: rgba(102, 126, 234, 0.1);
     color: #667eea !important;
     transform: translateY(-2px);
+}
+
+/* Selection menu styling */
+.selection-menu {
+    z-index: 1020 !important;
+    position: relative;
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08) !important;
+    margin-bottom: 1rem;
 }
 
 @media (min-width: 375px) {
@@ -246,6 +245,11 @@ body {
 .container {
     max-width: 1200px;
     padding: 0 1rem;
+}
+
+/* Add margin to card containers only */
+.container:not(.navbar .container) {
+    margin-top: 1.5rem;
 }
 
 

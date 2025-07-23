@@ -6,13 +6,13 @@
     transition: all 0.3s ease;
     cursor: pointer;
     margin-bottom: 10px;
-    margin-left: 8px;
-    margin-right: 8px;
+    margin-left: 5px;
+    margin-right: 5px;
     background: #ffffff;
     border: 1px solid #e8e8e8;
     position: relative;
     z-index: 1;
-    width: calc(25% - 16px);
+    width: calc(25% - 10px);
 }
 
 .card:hover {
@@ -275,13 +275,13 @@ th, td {
 /* Responsive improvements */
 @media (max-width: 991px) {
     .card {
-        width: calc(33.333% - 16px);
+        width: calc(33.333% - 10px);
     }
 }
 
 @media (max-width: 767px) {
     .card {
-        width: calc(50% - 16px);
+        width: calc(50% - 10px);
         margin-bottom: 1rem;
     }
     
@@ -312,7 +312,7 @@ th, td {
 
 @media (max-width: 575px) {
     .card {
-        width: calc(100% - 16px);
+        width: calc(100% - 10px);
     }
 }
 

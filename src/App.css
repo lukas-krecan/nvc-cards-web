@@ -281,8 +281,10 @@ th, td {
 
 @media (max-width: 767px) {
     .card {
-        width: calc(50% - 10px);
-        margin-bottom: 1rem;
+        width: calc(50% - 6px);
+        margin-bottom: 0.5rem;
+        margin-left: 3px;
+        margin-right: 3px;
     }
     
     .container {
@@ -312,7 +314,9 @@ th, td {
 
 @media (max-width: 575px) {
     .card {
-        width: calc(100% - 10px);
+        width: calc(100% - 6px);
+        margin-left: 3px;
+        margin-right: 3px;
     }
 }
 

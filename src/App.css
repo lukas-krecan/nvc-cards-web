@@ -236,6 +236,16 @@ th, td {
     filter: alpha(opacity=20);
 }
 
+/* Drag improvements */
+/* Prevent text selection on mobile during potential drags */
+.cards .row * {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+}
+
 /* Add margin to card containers only */
 .cards {
     margin-top: 0.5rem;

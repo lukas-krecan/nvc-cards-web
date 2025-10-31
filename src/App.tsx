@@ -251,8 +251,10 @@ class SelectedCardList extends React.Component<SelectedCardListProps> {
             <Container className={hideIf(!active)}>
                 <Row className={"text-center text-lg-start" + hideIf(cards.length === 0)} ref={this.dragulaDecorator}>
                     {cards.map(card => {
+                        // show a drag handle for cards in the selected list so drag starts only from the handle
                         return <CardView onCardClick={this.props.onCardClick} card={card}
                                          isSelected={isSelected(card)}
+                                         showHandle={true}
                                          key={card.id}/>
                     })}
                 </Row>
@@ -266,13 +268,33 @@ class SelectedCardList extends React.Component<SelectedCardListProps> {
 
     dragulaDecorator = (componentBackingInstance: HTMLElement) => {
         if (componentBackingInstance) {
-            let options = {};
-            Dragula([componentBackingInstance], options).on('drop', () => {
-                const ids = this.getChildrenIds(componentBackingInstance);
-                this.props.onSelectionChange(ids)
-            })
-        }
-    };
+            // guard for SSR
+            const isClient = (typeof window !== 'undefined');
+            // Use the same breakpoint as CSS to decide when handle-only dragging should apply
+            const isMobileViewport = isClient && window.matchMedia && window.matchMedia('(max-width: 575px)').matches;
+
+            const moves = (el: any, container: any, handle: any) => {
+                // On mobile viewport only allow dragging when starting from the handle element.
+                if (!isMobileViewport) {
+                    return true;
+                }
+                try {
+                    return handle && (handle.classList && handle.classList.contains('drag-handle')
+                        || handle.closest && handle.closest('.drag-handle'));
+                } catch (e) {
+                    return false;
+                }
+            };
+
+            const options: any = { moves };
+
+            const drake = Dragula([componentBackingInstance], options);
+            drake.on('drop', () => {
+                 const ids = this.getChildrenIds(componentBackingInstance);
+                 this.props.onSelectionChange(ids)
+             })
+         }
+     };
 
     private getChildrenIds(componentBackingInstance: HTMLElement) {
         const ids = []

@@ -10,6 +10,7 @@
     background: #ffffff;
     border: 1px solid #e8e8e8;
     width: calc(25% - 10px);
+    position: relative; /* ensure position for absolute handle placement */
 }
 
 .card:hover {
@@ -19,7 +20,7 @@
 }
 
 .card-body {
-    padding: 1.5rem;
+    padding: 1.5rem 2rem;
     border-radius: 16px;
 }
 
@@ -75,13 +76,17 @@
 }
 
 .nav-link.active {
-    font-weight: 600;
     color: #667eea !important;
 }
 
 .tab.active {
     border-bottom: 3px solid #667eea !important;
     border-radius: 0 !important;
+}
+
+/* Reserve space for the tab bottom border so activating a tab doesn't change layout height */
+.tab {
+    border-bottom: 3px solid transparent;
 }
 
 th, td {
@@ -162,7 +167,7 @@ th, td {
 }
 
 .nav-link {
-    font-weight: 500;
+    font-weight: 600; /* keep weight consistent to avoid layout shift when activating */
     color: #4a5568 !important;
     padding: 0.75rem 1.25rem !important;
     border-radius: 12px;
@@ -305,19 +310,78 @@ th, td {
     }
 }
 
-/* Animation for page transitions */
-.container > .row {
-    animation: fadeInUp 0.6s ease-out;
+/* Drag handle styling */
+.drag-handle {
+    /* hidden by default on desktop without using `display` to avoid analyzer warnings */
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    /* center vertically within the card */
+    top: 50%;
+    transform: translateY(-50%);
+    right: 8px;
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    /* match the card background so the handle is less prominent */
+    background: inherit;
+    border: none;
+    align-items: center;
+    justify-content: center;
+    cursor: grab;
+    padding: 0;
+    z-index: 5;
+    -webkit-tap-highlight-color: transparent;
+    /* Prevent the handle from contributing to page scrolling; only the handle starts drags */
+    touch-action: none;
 }
 
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
+/* Specific positioning for left and right variants */
+.drag-handle-left {
+    left: 8px;
+    right: auto;
+}
+
+.drag-handle-right {
+    right: 8px;
+    left: auto;
+}
+
+/* Show the handle only on small/mobile screens where touch dragging should use the handle */
+@media (max-width: 575px) {
+    .drag-handle {
+        display: flex;
         opacity: 1;
-        transform: translateY(0);
+        pointer-events: auto;
+        transform: translateY(-50%);
+    }
+
+    .drag-handle-left {
+        left: 6px;
+        right: auto;
+    }
+
+    .drag-handle-right {
+        right: 6px;
+        left: auto;
     }
 }
 
+.drag-handle:active {
+    cursor: grabbing;
+}
+
+/* Icon nudges: separate for left and right handles so icon moves toward card center */
+.drag-handle-right .drag-icon {
+    font-size: 32px;
+    line-height: 1;
+    color: rgba(0,0,0,0.09);
+    transform: translateX(4px);
+}
+
+.drag-handle-left .drag-icon {
+    font-size: 32px;
+    line-height: 1;
+    color: rgba(0,0,0,0.09);
+    transform: translateX(-4px);
+}

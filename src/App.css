@@ -319,6 +319,7 @@ th, td {
 
 /* Drag handle styling */
 .drag-handle {
+    display: none; /* hidden by default on desktop */
     position: absolute;
     /* center vertically within the card */
     top: 50%;
@@ -330,7 +331,6 @@ th, td {
     /* match the card background so the handle is less prominent */
     background: inherit;
     border: none; /* hide the handle border as requested */
-    display: flex;
     align-items: center;
     justify-content: center;
     cursor: grab;
@@ -339,6 +339,17 @@ th, td {
     -webkit-tap-highlight-color: transparent;
     /* Prevent the handle from contributing to page scrolling; only the handle starts drags */
     touch-action: none;
+}
+
+/* Show the handle only on small/mobile screens where touch dragging should use the handle */
+@media (max-width: 575px) {
+    .drag-handle {
+        display: flex;
+        right: 6px;
+        width: 30px;
+        height: 30px;
+        transform: translateY(-50%);
+    }
 }
 
 .drag-handle:active {

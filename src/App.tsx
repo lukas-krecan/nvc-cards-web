@@ -268,17 +268,28 @@ class SelectedCardList extends React.Component<SelectedCardListProps> {
 
     dragulaDecorator = (componentBackingInstance: HTMLElement) => {
         if (componentBackingInstance) {
-            // Only allow dragging to start from the element with class 'drag-handle'
-            Dragula([componentBackingInstance], {
-                moves: function (el: any, container: any, handle: any) {
-                    try {
-                        return handle && (handle.classList && handle.classList.contains('drag-handle')
-                            || handle.closest && handle.closest('.drag-handle'));
-                    } catch (e) {
-                        return false;
-                    }
+            // guard for SSR
+            const isClient = (typeof window !== 'undefined');
+            // Use the same breakpoint as CSS to decide when handle-only dragging should apply
+            const isMobileViewport = isClient && window.matchMedia && window.matchMedia('(max-width: 575px)').matches;
+
+            const moves = (el: any, container: any, handle: any) => {
+                // On mobile viewport only allow dragging when starting from the handle element.
+                if (!isMobileViewport) {
+                    return true;
                 }
-            } as any).on('drop', () => {
+                try {
+                    return handle && (handle.classList && handle.classList.contains('drag-handle')
+                        || handle.closest && handle.closest('.drag-handle'));
+                } catch (e) {
+                    return false;
+                }
+            };
+
+            const options: any = { moves };
+
+            const drake = Dragula([componentBackingInstance], options);
+            drake.on('drop', () => {
                  const ids = this.getChildrenIds(componentBackingInstance);
                  this.props.onSelectionChange(ids)
              })

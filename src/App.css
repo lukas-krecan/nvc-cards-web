@@ -10,6 +10,7 @@
     background: #ffffff;
     border: 1px solid #e8e8e8;
     width: calc(25% - 10px);
+    position: relative; /* ensure position for absolute handle placement */
 }
 
 .card:hover {
@@ -303,6 +304,13 @@ th, td {
         margin-left: 3px;
         margin-right: 3px;
     }
+
+    .drag-handle {
+        right: 6px;
+        width: 30px;
+        height: 30px;
+        transform: translateY(-50%);
+    }
 }
 
 /* Animation for page transitions */
@@ -321,3 +329,47 @@ th, td {
     }
 }
 
+/* Drag handle styling */
+.drag-handle {
+    position: absolute;
+    /* center vertically within the card */
+    top: 50%;
+    transform: translateY(-50%);
+    right: 8px;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    /* match the card background so the handle is less prominent */
+    background: inherit;
+    border: none; /* hide the handle border as requested */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: grab;
+    padding: 0;
+    z-index: 5;
+    -webkit-tap-highlight-color: transparent;
+    /* Prevent the handle from contributing to page scrolling; only the handle starts drags */
+    touch-action: none;
+}
+
+.drag-handle:active {
+    cursor: grabbing;
+}
+
+.drag-handle .drag-icon {
+    /* slightly smaller and lighter so the handle is subtle */
+    font-size: 16px;
+    line-height: 1;
+    color: rgba(0,0,0,0.25);
+}
+
+/* Make sure the handle doesn't overlay the card text on very small screens */
+@media (max-width: 575px) {
+    .drag-handle {
+        right: 6px;
+        width: 30px;
+        height: 30px;
+        transform: translateY(-50%);
+    }
+}

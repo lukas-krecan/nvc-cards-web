@@ -251,8 +251,10 @@ class SelectedCardList extends React.Component<SelectedCardListProps> {
             <Container className={hideIf(!active)}>
                 <Row className={"text-center text-lg-start" + hideIf(cards.length === 0)} ref={this.dragulaDecorator}>
                     {cards.map(card => {
+                        // show a drag handle for cards in the selected list so drag starts only from the handle
                         return <CardView onCardClick={this.props.onCardClick} card={card}
                                          isSelected={isSelected(card)}
+                                         showHandle={true}
                                          key={card.id}/>
                     })}
                 </Row>
@@ -266,13 +268,22 @@ class SelectedCardList extends React.Component<SelectedCardListProps> {
 
     dragulaDecorator = (componentBackingInstance: HTMLElement) => {
         if (componentBackingInstance) {
-            let options = {};
-            Dragula([componentBackingInstance], options).on('drop', () => {
-                const ids = this.getChildrenIds(componentBackingInstance);
-                this.props.onSelectionChange(ids)
-            })
-        }
-    };
+            // Only allow dragging to start from the element with class 'drag-handle'
+            Dragula([componentBackingInstance], {
+                moves: function (el: any, container: any, handle: any) {
+                    try {
+                        return handle && (handle.classList && handle.classList.contains('drag-handle')
+                            || handle.closest && handle.closest('.drag-handle'));
+                    } catch (e) {
+                        return false;
+                    }
+                }
+            } as any).on('drop', () => {
+                 const ids = this.getChildrenIds(componentBackingInstance);
+                 this.props.onSelectionChange(ids)
+             })
+         }
+     };
 
     private getChildrenIds(componentBackingInstance: HTMLElement) {
         const ids = []

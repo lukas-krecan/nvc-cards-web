@@ -20,7 +20,7 @@
 }
 
 .card-body {
-    padding: 2rem;
+    padding: 1.5rem 2rem;
     border-radius: 16px;
 }
 
@@ -355,4 +355,6 @@ th, td {
     font-size: 32px;
     line-height: 1;
     color: rgba(0,0,0,0.15);
+    /* nudge the icon slightly to the right for better visual alignment */
+    transform: translateX(4px);
 }

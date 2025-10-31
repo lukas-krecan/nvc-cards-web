@@ -354,5 +354,5 @@ th, td {
     /* larger icon to match the bigger handle */
     font-size: 32px;
     line-height: 1;
-    color: rgba(0,0,0,0.25);
+    color: rgba(0,0,0,0.15);
 }

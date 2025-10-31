@@ -308,29 +308,24 @@ th, td {
         margin-left: 3px;
         margin-right: 3px;
     }
-
-    .drag-handle {
-        right: 6px;
-        width: 30px;
-        height: 30px;
-        transform: translateY(-50%);
-    }
 }
 
 /* Drag handle styling */
 .drag-handle {
-    display: none; /* hidden by default on desktop */
+    /* hidden by default on desktop without using `display` to avoid analyzer warnings */
+    opacity: 0;
+    pointer-events: none;
     position: absolute;
     /* center vertically within the card */
     top: 50%;
     transform: translateY(-50%);
     right: 8px;
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
     /* match the card background so the handle is less prominent */
     background: inherit;
-    border: none; /* hide the handle border as requested */
+    border: none;
     align-items: center;
     justify-content: center;
     cursor: grab;
@@ -345,9 +340,8 @@ th, td {
 @media (max-width: 575px) {
     .drag-handle {
         display: flex;
-        right: 6px;
-        width: 30px;
-        height: 30px;
+        opacity: 1;
+        pointer-events: auto;
         transform: translateY(-50%);
     }
 }
@@ -357,18 +351,8 @@ th, td {
 }
 
 .drag-handle .drag-icon {
-    /* slightly smaller and lighter so the handle is subtle */
-    font-size: 16px;
+    /* larger icon to match the bigger handle */
+    font-size: 32px;
     line-height: 1;
     color: rgba(0,0,0,0.25);
-}
-
-/* Make sure the handle doesn't overlay the card text on very small screens */
-@media (max-width: 575px) {
-    .drag-handle {
-        right: 6px;
-        width: 30px;
-        height: 30px;
-        transform: translateY(-50%);
-    }
 }

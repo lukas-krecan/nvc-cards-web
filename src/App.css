@@ -375,13 +375,13 @@ th, td {
 .drag-handle-right .drag-icon {
     font-size: 32px;
     line-height: 1;
-    color: rgba(0,0,0,0.05);
+    color: rgba(0,0,0,0.09);
     transform: translateX(4px);
 }
 
 .drag-handle-left .drag-icon {
     font-size: 32px;
     line-height: 1;
-    color: rgba(0,0,0,0.05);
+    color: rgba(0,0,0,0.09);
     transform: translateX(-4px);
 }

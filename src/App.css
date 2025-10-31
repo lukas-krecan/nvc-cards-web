@@ -76,13 +76,17 @@
 }
 
 .nav-link.active {
-    font-weight: 600;
     color: #667eea !important;
 }
 
 .tab.active {
     border-bottom: 3px solid #667eea !important;
     border-radius: 0 !important;
+}
+
+/* Reserve space for the tab bottom border so activating a tab doesn't change layout height */
+.tab {
+    border-bottom: 3px solid transparent;
 }
 
 th, td {
@@ -163,7 +167,7 @@ th, td {
 }
 
 .nav-link {
-    font-weight: 500;
+    font-weight: 600; /* keep weight consistent to avoid layout shift when activating */
     color: #4a5568 !important;
     padding: 0.75rem 1.25rem !important;
     border-radius: 12px;
@@ -310,22 +314,6 @@ th, td {
         width: 30px;
         height: 30px;
         transform: translateY(-50%);
-    }
-}
-
-/* Animation for page transitions */
-.container > .row {
-    animation: fadeInUp 0.6s ease-out;
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
     }
 }
 

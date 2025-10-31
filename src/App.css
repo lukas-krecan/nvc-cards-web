@@ -336,6 +336,17 @@ th, td {
     touch-action: none;
 }
 
+/* Specific positioning for left and right variants */
+.drag-handle-left {
+    left: 8px;
+    right: auto;
+}
+
+.drag-handle-right {
+    right: 8px;
+    left: auto;
+}
+
 /* Show the handle only on small/mobile screens where touch dragging should use the handle */
 @media (max-width: 575px) {
     .drag-handle {
@@ -344,17 +355,33 @@ th, td {
         pointer-events: auto;
         transform: translateY(-50%);
     }
+
+    .drag-handle-left {
+        left: 6px;
+        right: auto;
+    }
+
+    .drag-handle-right {
+        right: 6px;
+        left: auto;
+    }
 }
 
 .drag-handle:active {
     cursor: grabbing;
 }
 
-.drag-handle .drag-icon {
-    /* larger icon to match the bigger handle */
+/* Icon nudges: separate for left and right handles so icon moves toward card center */
+.drag-handle-right .drag-icon {
     font-size: 32px;
     line-height: 1;
     color: rgba(0,0,0,0.10);
-    /* nudge the icon slightly to the right for better visual alignment */
     transform: translateX(4px);
+}
+
+.drag-handle-left .drag-icon {
+    font-size: 32px;
+    line-height: 1;
+    color: rgba(0,0,0,0.10);
+    transform: translateX(-4px);
 }

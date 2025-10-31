@@ -44,15 +44,25 @@ const CardView = (props: CardProps) => {
         <div className="card-body d-flex flex-column justify-content-center align-items-center">
             {/* Drag handle - only rendered when parent asks for it */}
             {props.showHandle && (
-                <button className="drag-handle" title="Drag to reorder"
-                        // prevent clicks on the handle from toggling selection
-                        onClick={(e) => e.stopPropagation()}
-                        type="button"
-                        aria-label="Drag to reorder"
-                        // allow drag libraries to receive the raw event target
-                >
-                    <span className="drag-icon" aria-hidden>≡</span>
-                </button>
+                <>
+                    <button className="drag-handle drag-handle-left" title="Drag to reorder"
+                            // prevent clicks on the handle from toggling selection
+                            onClick={(e) => e.stopPropagation()}
+                            type="button"
+                            aria-label="Drag to reorder"
+                    >
+                        <span className="drag-icon" aria-hidden>≡</span>
+                    </button>
+
+                    <button className="drag-handle drag-handle-right" title="Drag to reorder"
+                            // prevent clicks on the handle from toggling selection
+                            onClick={(e) => e.stopPropagation()}
+                            type="button"
+                            aria-label="Drag to reorder"
+                    >
+                        <span className="drag-icon" aria-hidden>≡</span>
+                    </button>
+                </>
             )}
             {card.data.map((t, i) => <span className={fontClass(t)} key={i}>{t.text}</span>)}
         </div>

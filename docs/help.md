@@ -5,6 +5,6 @@ Text kartiček převzatý ze stánek [nenásilné komunikace](https://www.nenasi
 
 Na této stránce jsou také k dispozici popisy cvičení.
 
-Zpětnou vazbu prosím zadávejte [zde](https://github.com/lukas-krecan/nvc-cards-web/issues/new).
+Zpětnou vazbu prosím zadávejte [zde](https://forms.gle/tSqRdBEU1JTjvKyT7).
     
 Zdrojový kód k dispozici na [GitHubu](https://github.com/lukas-krecan/nvc-cards-web) pod licencí GNU General Public License v3.0

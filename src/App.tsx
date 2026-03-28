@@ -266,35 +266,42 @@ class SelectedCardList extends React.Component<SelectedCardListProps> {
         );
     }
 
-    dragulaDecorator = (componentBackingInstance: HTMLElement) => {
-        if (componentBackingInstance) {
-            // guard for SSR
-            const isClient = (typeof window !== 'undefined');
-            // Use the same breakpoint as CSS to decide when handle-only dragging should apply
-            const isMobileViewport = isClient && window.matchMedia && window.matchMedia('(max-width: 575px)').matches;
+    dragulaDecorator = (componentBackingInstance: HTMLElement | null): void | (() => void) => {
+        if (!componentBackingInstance) return;
 
-            const moves = (el: any, container: any, handle: any) => {
-                // On mobile viewport only allow dragging when starting from the handle element.
-                if (!isMobileViewport) {
-                    return true;
-                }
-                try {
-                    return handle && (handle.classList && handle.classList.contains('drag-handle')
-                        || handle.closest && handle.closest('.drag-handle'));
-                } catch (e) {
-                    return false;
-                }
-            };
+        // guard for SSR
+        const isClient = (typeof window !== 'undefined');
+        // Use the same breakpoint as CSS to decide when handle-only dragging should apply
+        const isMobileViewport = isClient && window.matchMedia && window.matchMedia('(max-width: 575px)').matches;
 
-            const options: any = { moves };
+        const moves = (el: any, container: any, handle: any) => {
+            // On mobile viewport only allow dragging when starting from the handle element.
+            if (!isMobileViewport) {
+                return true;
+            }
+            try {
+                return handle && ((handle.classList && handle.classList.contains('drag-handle'))
+                    || (handle.closest && handle.closest('.drag-handle')));
+            } catch (e) {
+                return false;
+            }
+        };
 
-            const drake = Dragula([componentBackingInstance], options);
-            drake.on('drop', () => {
-                 const ids = this.getChildrenIds(componentBackingInstance);
-                 this.props.onSelectionChange(ids)
-             })
-         }
-     };
+        const options: any = { moves };
+
+        const drake = Dragula([componentBackingInstance], options);
+        drake.on('drop', () => {
+            const ids = this.getChildrenIds(componentBackingInstance);
+            this.props.onSelectionChange(ids);
+        });
+
+        // React 19 ref callbacks support returning a cleanup function, called on unmount/remount.
+        // Without this, React 19 strict mode double-invokes the ref, creating two Dragula
+        // instances on the same container which breaks drag and drop.
+        return () => {
+            drake.destroy();
+        };
+    };
 
     private getChildrenIds(componentBackingInstance: HTMLElement) {
         const ids = []

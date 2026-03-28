@@ -42,8 +42,8 @@ class LoadDialog extends React.Component<LoadDialogProps> {
                             <tr key={savedState.savedAt}>
                                 <td>{this.formatDate(savedState)}</td>
                                 <td>{savedState.name}</td>
-                                <td><Button className="btn-sm" onClick={() => this.props.handleLoad(savedState)}>{translations.loadButton}</Button></td>
-                                <td><Button className="btn-sm btn-secondary" onClick={() => this.deleteSavedState(savedState)}><FontAwesomeIcon icon={faTrashCan}/></Button></td>
+                                <td><Button className="btn-sm" data-testid={`btn-load-${savedState.key}`} onClick={() => this.props.handleLoad(savedState)}>{translations.loadButton}</Button></td>
+                                <td><Button className="btn-sm btn-secondary" data-testid={`btn-delete-${savedState.key}`} onClick={() => this.deleteSavedState(savedState)}><FontAwesomeIcon icon={faTrashCan}/></Button></td>
                             </tr>
                         )}
                     </table>

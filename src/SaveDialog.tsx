@@ -28,7 +28,7 @@ class SaveDialog extends React.Component<SaveDialogProps> {
                     </Modal.Header>
 
                     <Modal.Body>
-                        <input type="text" placeholder={translations.namePlaceholder} name="name" autoFocus={true} />
+                        <input type="text" placeholder={translations.namePlaceholder} name="name" autoFocus={true} data-testid="input-save-name" />
                         <p className="pt-2"><em className="small">{translations.storageInfo}</em></p>
                     </Modal.Body>
 

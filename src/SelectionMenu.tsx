@@ -25,10 +25,10 @@ export default class SelectionMenu extends React.Component<SelectionMenuProps> {
                                                      expand="sm"
                                                      className="pt-0 selection-menu"
         >
-            <Icon onClick={this.props.share} disabled={this.props.noCardsSelected} icon={faShareNodes} tooltip={translations.share}/>
-            <Icon onClick={this.props.load} disabled={!this.props.hasSavedStates} icon={faUpload} tooltip={translations.load}/>
-            <Icon onClick={this.props.save} disabled={this.props.noCardsSelected} icon={faDownload} tooltip={translations.save}/>
-            <Icon onClick={this.props.clean} disabled={this.props.noCardsSelected} icon={faTrashCan} tooltip={translations.delete}/>
+            <Icon onClick={this.props.share} disabled={this.props.noCardsSelected} icon={faShareNodes} tooltip={translations.share} testId="btn-share"/>
+            <Icon onClick={this.props.load} disabled={!this.props.hasSavedStates} icon={faUpload} tooltip={translations.load} testId="btn-load"/>
+            <Icon onClick={this.props.save} disabled={this.props.noCardsSelected} icon={faDownload} tooltip={translations.save} testId="btn-save"/>
+            <Icon onClick={this.props.clean} disabled={this.props.noCardsSelected} icon={faTrashCan} tooltip={translations.delete} testId="btn-delete"/>
         </Navbar>
     }
 }
@@ -38,7 +38,8 @@ type IconProps = {
     onClick: () => void,
     disabled: boolean,
     icon: IconProp,
-    tooltip: string
+    tooltip: string,
+    testId: string,
 }
 class Icon extends React.Component<IconProps> {
     render() {
@@ -48,7 +49,8 @@ class Icon extends React.Component<IconProps> {
                 overlay={<Tooltip id={`tooltip-${this.props.tooltip}`}>{this.props.tooltip}</Tooltip>}
             >
                 <Nav.Link onClick={this.props.onClick} className="pt-0"
-                          disabled={this.props.disabled}><FontAwesomeIcon icon={this.props.icon} />
+                          disabled={this.props.disabled}
+                          data-testid={this.props.testId}><FontAwesomeIcon icon={this.props.icon} />
                 </Nav.Link>
             </OverlayTrigger>
         </Nav>

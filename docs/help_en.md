@@ -5,6 +5,6 @@ Card text taken from the [nonviolent communication](https://www.nenasilnakomunik
 
 Exercise descriptions are also available on this page.
 
-Please provide feedback [here](https://github.com/lukas-krecan/nvc-cards-web/issues/new).
+Please provide feedback [here](https://forms.gle/eyp469A64tR5B1fY8).
     
 Source code available on [GitHub](https://github.com/lukas-krecan/nvc-cards-web) under GNU General Public License v3.0

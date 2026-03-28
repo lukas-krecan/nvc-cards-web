@@ -168,10 +168,12 @@ class App extends React.Component<
 
                 <Container className="cards">
                     <CardList cards={this.props.feelings} selectedCards={this.state.selectedCards}
-                              onCardClick={this.selectCard.bind(this)} active={this.state.activeScreen === 'feelings'}/>
+                              onCardClick={this.selectCard.bind(this)} active={this.state.activeScreen === 'feelings'}
+                              testId="screen-feelings"/>
 
                     <CardList cards={this.props.needs} selectedCards={this.state.selectedCards}
-                              onCardClick={this.selectCard.bind(this)} active={this.state.activeScreen === 'needs'}/>
+                              onCardClick={this.selectCard.bind(this)} active={this.state.activeScreen === 'needs'}
+                              testId="screen-needs"/>
 
                     <SelectedCardList cards={this.getSelectedCardsList()} selectedCards={this.state.selectedCards}
                                       onCardClick={this.selectCard.bind(this)}
@@ -207,6 +209,7 @@ type CardListProps = {
     cards: CardInfo[];
     selectedCards: string[];
     onCardClick: (card: CardInfo) => void;
+    testId?: string;
 };
 
 const CardList = (props: CardListProps) => {
@@ -217,7 +220,7 @@ const CardList = (props: CardListProps) => {
     };
 
     return (
-        <Container className={!active ? "hidden" : ""}>
+        <Container className={!active ? "hidden" : ""} data-testid={props.testId}>
             <Row className="text-center text-lg-start">
                 {cards.map(card => {
                     return <CardView onCardClick={props.onCardClick} card={card} isSelected={isSelected(card)}
@@ -248,7 +251,7 @@ class SelectedCardList extends React.Component<SelectedCardListProps> {
         };
 
         return (
-            <Container className={hideIf(!active)}>
+            <Container className={hideIf(!active)} data-testid="screen-selection">
                 <Row className={"text-center text-lg-start" + hideIf(cards.length === 0)} ref={this.dragulaDecorator}>
                     {cards.map(card => {
                         // show a drag handle for cards in the selected list so drag starts only from the handle

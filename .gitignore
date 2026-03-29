@@ -25,3 +25,4 @@ yarn-error.log*
 /nvc-cards-web.iml
 /test-results/
 /playwright-report/
+/.features-gen/

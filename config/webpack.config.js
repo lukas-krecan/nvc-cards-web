@@ -141,6 +141,22 @@ module.exports = function (webpackEnv) {
                   // so that it honors browserslist config in package.json
                   // which in turn let's users customize the target behavior as per their needs.
                   'postcss-normalize',
+                  ...(isEnvProduction ? [
+                    [
+                      '@fullhuman/postcss-purgecss',
+                      {
+                        content: [
+                          paths.appHtml,
+                          `${paths.appSrc}/**/*.{ts,tsx,js,jsx}`,
+                        ],
+                        safelist: {
+                          // Bootstrap classes added dynamically by react-bootstrap
+                          standard: [/^show$/, /^fade$/, /^collapsing$/, /^modal-/, /^offcanvas-/, /^navbar-/, /^dropdown-/],
+                        },
+                        defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || [],
+                      },
+                    ],
+                  ] : []),
                 ],
           },
           sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
